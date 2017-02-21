@@ -2,6 +2,9 @@
 
 A textarea component that handles and hands off events well.
 
+The `RichTextArea` component enshrines the concept of something being active, that is visible (presumably) *and* hogging the user input. Hogging means that several event handlers are registered to handle user interface events, these handlers are then unregistered when the rich text area is deactivated
+
+Rich text areas take the headache out of having multiple text areas in one application because they guarantee that only the active rich text area will invoke its registered handlers. They also provide better event handling. For example, they capture the `focus` event but defer passing it on for a tick so as to be able to provide both the content and selection values as arguments to the focus handler. Similarly, their change handler will be invoked whenever the content or selection changes, no matter how often, rather then just when the enter key is pressed (say) or when the focus is lost.
 
 ## Related projects
 

@@ -199,11 +199,7 @@ class RichTextArea extends TextArea {
   }
 
   static clone(selectorOrElement, changeHandler, scrollHandler, focusHandler, blurHandler) {
-    var richTextArea = Element.clone(RichTextArea, selectorOrElement, changeHandler, scrollHandler, focusHandler, blurHandler);
-
-    richTextArea.removeAttribute('id');
-
-    return richTextArea;
+    return Element.clone(RichTextArea, selectorOrElement, changeHandler, scrollHandler, focusHandler, blurHandler);
   }
 }
 
