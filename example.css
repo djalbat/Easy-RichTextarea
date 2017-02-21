@@ -1,0 +1,12 @@
+html,
+body {
+  height: 100%;
+}
+
+textarea.rich {
+  display: none;
+}
+
+textarea.rich.active {
+  display: block;
+}
