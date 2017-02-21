@@ -58,7 +58,7 @@ Alternatively, if you're using an AMD style `require` the usage is similar to th
 ```js
 var easyuirichtextarea = require('easyui-richtextarea'),
     Selection = easyuirichtextarea.Selection,
-    RichTextArea = easyuirichtextarea;  ///
+    RichTextArea = easyuirichtextarea.RichTextArea;  ///
 ```
 
 ## Compiling from source
