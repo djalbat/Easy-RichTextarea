@@ -10,7 +10,7 @@ It also provides better event handling. For example, its captures the `focus` ev
 
 - [EasyUI](https://github.com/djalbat/EasyUI) A V-framework.
 - [EasyUI-Layout](https://github.com/djalbat/EasyUI-Layout) Layout elements that work with CSS flexbox.
-- [EasyUI-DragAndDrop](https://github.com/djalbat/EasyUI-DragAndDrop) Drag and drop elements including a file explorer and a rubbish bin.
+- [EasyUI-DragAndDrop](https://github.com/djalbat/EasyUI-DragAndDrop) Drag and drop elements including an explorer and a rubbish bin.
 
 ### Are these projects actually used anywhere?
 
