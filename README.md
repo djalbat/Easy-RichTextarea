@@ -82,8 +82,6 @@ Aside from the usual selector, the constructor takes four additional and optiona
 ```js
 var richTextArea = new RichTextArea('#richTextArea', changeHandler, scrollHandler, focusHandler, blurHandler);
 
-richTextArea.activate();
-
 function changeHandler(content, selection, contentChanged, selectionChanged) {
   if (contentChanged) {
     console.log('content changed')
@@ -107,9 +105,7 @@ function blurHandler() {
 }
 ```
 
-Note the arguments passed to the handlers.
-
-It also has the usual `clone()` methods, both static and instance.
+Note the arguments passed to the handlers. It also has the usual `clone()` methods.
 
 Activating and deactivating the component couldn't be simpler:
 
