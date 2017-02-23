@@ -1,10 +1,10 @@
 # EasyUI-RichTextArea
 
-A textarea component that handles and hands off events well.
+A textarea element that handles and hands off events well.
 
-The `RichTextArea` component enshrines the concept of being active, that is visible (presumably) *and* hogging the user input. Hogging the user input means that several event handlers are registered to handle user input events when the component is activated. These handlers are then unregistered when the component is deactivated. Using it will take some of the headache out of having multiple textareas in one application because only an active component will invoke its handlers.
+The `RichTextArea` element enshrines the concept of being active, that is visible (presumably) *and* hogging the user input. Hogging the user input means that several event handlers are registered to handle user input events when the element is activated. These handlers are then unregistered when the element is deactivated. Using it will take some of the headache out of having multiple textareas in one application because only an active element will invoke its handlers.
 
-It also provides better event handling. For example, its captures the `focus` event but defers passing it on for a tick so as to be able to provide both the content and selection values as arguments to its focus handler. Similarly, the change handler will be invoked whenever the content or selection changes, no matter how often, rather then just when the enter key is pressed (say) or when the focus is lost.
+It also provides better event handling. For example, its captures the `focus` event but defers handing it off for a tick so as to be able to provide both the content and selection values as arguments to its focus handler. Similarly, the change handler will be invoked whenever the content or selection changes, no matter how often, rather then just when the enter key is pressed (say) or when the focus is lost.
 
 ## Related projects
 
@@ -75,7 +75,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 
 See the `example.html` file in the project's root directory, or read on.
 
-### Creating the component
+### Creating the element
 
 Aside from the usual selector, the constructor takes four additional and optional arguments for the handlers:
 
@@ -107,7 +107,7 @@ function blurHandler() {
 
 Note the arguments passed to the handlers. It also has the usual `clone()` methods.
 
-Activating and deactivating the component couldn't be simpler:
+Activating and deactivating the element couldn't be simpler:
 
 ```js
 richTextArea.activate();
@@ -117,7 +117,7 @@ richTextArea.deactivate();
 
 ### CSS
 
-Bear in mind that all the `activate()` and `deactivate()` methods do is add and remove an `active` class. If you want the component to be hidden or shown depending on whether or not it is active (which is recommended), you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `dist` directory to see how.
+Bear in mind that all the `activate()` and `deactivate()` methods do is add and remove an `active` class. If you want the element to be hidden or shown depending on whether or not it is active (which is recommended), you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `dist` directory to see how.
 
 ## Contact
 
