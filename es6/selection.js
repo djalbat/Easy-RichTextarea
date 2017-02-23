@@ -23,18 +23,20 @@ class Selection {
   }
 
   isEqualTo(selection) {
-    var equalTo = false;
-
-    if (selection !== null) {
-      var selectionStartPosition = selection.getStartPosition(),
-          selectionEndPosition = selection.getEndPosition(),
-          startPositionsEqual = (this.startPosition === selectionStartPosition),
-          endPositionsEqual = (this.endPosition === selectionEndPosition);
-
-      equalTo = (startPositionsEqual && endPositionsEqual);
-    }
+    var selectionStartPosition = selection.getStartPosition(),
+        selectionEndPosition = selection.getEndPosition(),
+        startPositionsEqual = (this.startPosition === selectionStartPosition),
+        endPositionsEqual = (this.endPosition === selectionEndPosition),
+        equalTo = (startPositionsEqual && endPositionsEqual);
 
     return equalTo;
+  }
+
+  isDifferentTo(selection) {
+    var equalTo = this.isEqualTo(selection),
+        differentTo = !equalTo;
+
+    return differentTo;
   }
 }
 

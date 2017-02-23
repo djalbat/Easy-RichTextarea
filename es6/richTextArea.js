@@ -2,18 +2,19 @@
 
 require('setimmediate');
 
-var defer = setImmediate, ///
-    repeat = setInterval; ///
+var defer = setImmediate; ///
 
 var easyui = require('easyui'),
     window = easyui.window,
     Element = easyui.Element,
     TextArea = easyui.TextArea;
 
+var Selection = require('./selection');
+
 const NAMESPACE = 'EasyUI_RichTextArea';
 
 class RichTextArea extends TextArea {
-  constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
+  constructor(selector, changeHandler = function() {}, scrollHandler = function() {}, focusHandler = function() {}, blurHandler = function() {}) {
     super(selector);
     
     this.changeHandler = changeHandler;
@@ -21,10 +22,13 @@ class RichTextArea extends TextArea {
     this.focusHandler = focusHandler;
     this.blurHandler = blurHandler;
 
-    this.interval = null;
+    var content = this.getContent(),
+        selection = this.getSelection();
 
-    this.previousContent = null;
-    this.previousSelection = null;
+    this.previousContent = content; ///
+    this.previousSelection = selection; ///
+
+    this.mouseDown = undefined; ///
   }
 
   clone(changeHandler, scrollHandler, focusHandler, blurHandler) { return RichTextArea.clone(this, changeHandler, scrollHandler, focusHandler, blurHandler); }
@@ -36,37 +40,39 @@ class RichTextArea extends TextArea {
   }
 
   activate() {
-    window.on('mouseup blur', this.windowMouseUpHandler.bind(this), NAMESPACE); ///
+    this.mouseDown = false;
 
-    this.onBlur(this.blurHandler, NAMESPACE);
-    this.onFocus(this.focusHandler, NAMESPACE);
-    this.onScroll(this.scrollHandler, NAMESPACE);
-    this.on('input', this.inputHandler.bind(this), NAMESPACE);
-    this.on('keydown', this.keyDownHandler.bind(this), NAMESPACE);
-    this.on('contextmenu', this.contextMenuHandler.bind(this), NAMESPACE);
+    window.on('mouseup contextmenu', function() {  ///
+      this.mouseDown = false;
+    }.bind(this), NAMESPACE);
 
-    this.onMouseDown(this.mouseDownHandler.bind(this), NAMESPACE);
+    this.on('mousedown', function() {
+      this.mouseDown = true;
+    }.bind(this), NAMESPACE);
+
+    this.onChange(this.changeHandler);
+    this.onScroll(this.scrollHandler);
+    this.onFocus(this.focusHandler);
+    this.onBlur(this.blurHandler);
 
     this.addClass('active');
   }
-  
+
   deactivate() {
-    window.off('mouseup blur', NAMESPACE);
+    this.mouseDown = false;
 
-    this.offBlur(NAMESPACE);
-    this.offFocus(NAMESPACE);
-    this.offScroll(NAMESPACE);
-    this.off('input', NAMESPACE);
-    this.off('keydown', NAMESPACE);
-    this.off('contextmenu', NAMESPACE);
+    window.off('mouseup contextmenu blur', NAMESPACE);  ///
 
-    this.offMouseDown(NAMESPACE);
+    this.off('mousedown', NAMESPACE);
+
+    this.offChange();
+    this.offScroll();
+    this.offFocus();
+    this.offBlur();
 
     this.removeClass('active');
-
-    this.clearInterval();  ///
   }
-  
+
   getContent() {
     var value = this.getValue(),
         content = value;  ///
@@ -74,127 +80,155 @@ class RichTextArea extends TextArea {
     return content;
   }
 
-  setContent(content) {
-    var value = content;  ///
-
-    this.setValue(value);
-  }
-
   getSelection() {
-    var selection = this.previousSelection, ///
-        focus = this.hasFocus();
-
-    if (focus) {
-      var selectionStart = this.getSelectionStart(), ///
-          selectionEnd = this.getSelectionEnd(), ///
-          startPosition = selectionStart, ///
-          endPosition = selectionEnd;
-
-      selection = new Selection(startPosition, endPosition);
-    }
+    var selectionStart = this.getSelectionStart(),
+        selectionEnd = this.getSelectionEnd(),
+        startPosition = selectionStart, ///
+        endPosition = selectionEnd,
+        selection = new Selection(startPosition, endPosition);
 
     return selection;
   }
 
-  setSelection(selection) {
-    if (selection !== null) {
-      var selectionStartPosition = selection.getStartPosition(),
-          selectionEndPosition = selection.getEndPosition(),
-          selectionStart = selectionStartPosition,  ///
-          selectionEnd = selectionEndPosition;  ///
+  setContent(content) {
+    var value = content;  ///
 
-      this.setSelectionStart(selectionStart);
-      this.setSelectionEnd(selectionEnd);
-    }
-  }
-
-  update() {
-    var content = this.extendedEditableDocument.getContent(),
-        selection = this.extendedEditableDocument.getSelection();
-
-    this.setContent(content);
-    this.setSelection(selection);
+    this.setValue(value);
 
     this.previousContent = content; ///
+  }
+
+  setSelection(selection) {
+    var selectionStartPosition = selection.getStartPosition(),
+        selectionEndPosition = selection.getEndPosition(),
+        selectionStart = selectionStartPosition,  ///
+        selectionEnd = selectionEndPosition;  ///
+
+    this.setSelectionStart(selectionStart);
+    this.setSelectionEnd(selectionEnd);
+
     this.previousSelection = selection; ///
   }
-  
-  change(callback) {
+
+  onChange(changeHandler) {
+    this.onInput(changeHandler);
+    this.onKeyDown(changeHandler);
+    this.onMouseMove(changeHandler);
+  }
+
+  onScroll(scrollHandler) {
+    super.onScroll(function(scrollTop, scrollLeft) {
+      var active = this.isActive();
+
+      if (active) {
+        scrollHandler(scrollTop, scrollLeft);
+      }
+    }.bind(this), NAMESPACE);
+  }
+
+  onFocus(focusHandler) {
+    this.on('focus', function() {
+      defer(function() {
+        var active = this.isActive();
+
+        if (active) {
+          var content = this.getContent(),
+              selection = this.getSelection();
+
+          focusHandler(content, selection);
+        }
+      }.bind(this));
+    }.bind(this), NAMESPACE);
+  }
+
+  onBlur(blurHandler) {
+    this.on('blur', function() {
+      var active = this.isActive();
+
+      if (active) {
+        blurHandler();
+      }
+    }.bind(this), NAMESPACE);
+  }
+
+  onInput(changeHandler) {
+    this.on('input', function() {
+      var active = this.isActive();
+
+      if (active) {
+        this.possibleChangeHandler(changeHandler);
+      }
+    }.bind(this), NAMESPACE);
+  }
+
+  onKeyDown(changeHandler) {
+    this.on('keydown', function() {
+      defer(function() {
+        var active = this.isActive();
+
+        if (active) {
+          this.possibleChangeHandler(changeHandler);
+        }
+      }.bind(this));
+    }.bind(this), NAMESPACE);
+  }
+
+  onMouseMove(changeHandler) {
+    super.onMouseMove(function() {
+      var active = this.isActive();
+
+      if (active) {
+        if (this.mouseDown === true) {
+          this.possibleChangeHandler(changeHandler);
+        }
+      }
+    }.bind(this), NAMESPACE);
+  }
+
+  offChange() {
+    this.offInput();
+    this.offKeyDown();
+    this.offMouseMove();
+  }
+
+  offScroll() {
+    super.offScroll(NAMESPACE);
+  }
+
+  offFocus() {
+    this.off('focus', NAMESPACE);
+  }
+
+  offBlur() {
+    this.off('blur', NAMESPACE);
+  }
+
+  offInput() {
+    this.off('input', NAMESPACE);
+  }
+
+  offKeyDown() {
+    this.off('keydown', NAMESPACE);
+  }
+
+  offMouseMove() {
+    super.offMouseMove(NAMESPACE);
+  }
+
+  possibleChangeHandler(changeHandler) {
     var content = this.getContent(),
         selection = this.getSelection(),
-        contentChanged = (content !== this.previousContent),
-        selectionChanged = !selection.isEqualTo(this.previousSelection),
+        contentDifferentToPreviousContent = (content !== this.previousContent),
+        selectionDifferentToPreviousSelection = selection.isDifferentTo(this.previousSelection),
+        contentChanged = contentDifferentToPreviousContent, ///
+        selectionChanged = selectionDifferentToPreviousSelection, ///
         changed = contentChanged || selectionChanged;
 
     if (changed) {
+      changeHandler(content, selection, contentChanged, selectionChanged);
+
       this.previousContent = content;
       this.previousSelection = selection;
-
-      this.changeHandler(content, selection, contentChanged, selectionChanged);
-    }
-
-    if (callback) {
-      callback();
-    }
-  }
-
-  deferChange(callback) {
-    defer(function() {
-      this.change(callback);
-    }.bind(this));
-  }
-
-  onFocus(focusHandler, namespace) {
-    this.on('focus', function() {
-      this.deferChange(function() {
-        this.focusHandler();
-      }.bind(this))
-    }.bind(this), namespace);
-  }
-
-  onBlur(blurHandler, namespace) {
-    this.on('blur', blurHandler, namespace);
-  }
-
-  offFocus(namespace) { this.off('focus', namespace); }
-
-  offBlur(namespace) { this.off('blur', namespace); }
-
-  inputHandler() {
-    this.change();
-  }
-
-  keyDownHandler() {
-    this.deferChange();
-  }
-
-  mouseDownHandler() {
-    this.clearInterval();
-
-    this.setInterval();
-
-    this.deferChange();
-  }
-
-  contextMenuHandler() {
-    this.clearInterval();
-  }
-  
-  windowMouseUpHandler() {
-    this.clearInterval();
-  }
-
-  setInterval() {
-    var change = this.change.bind(this);
-
-    this.interval = repeat(change, RICH_TEXT_AREA_CHANGE_REPEAT_INTERVAL);
-  }
-
-  clearInterval() {
-    if (this.interval !== null) {
-      clearInterval(this.interval);
-
-      this.interval = null;
     }
   }
 

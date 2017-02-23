@@ -2,7 +2,7 @@
 
 A textarea component that handles and hands off events well.
 
-The `RichTextArea` component enshrines the concept of something being active, that is visible (presumably) *and* hogging the user input. Hogging means that several event handlers are registered to handle user interface events, these handlers are then unregistered when the component is deactivated. It take some of the headache out of having multiple textareas in one application because it guarantees that only the active component will invoke its handlers.
+The `RichTextArea` component enshrines the concept of being active, that is visible (presumably) *and* hogging the user input. Hogging the user input means that several event handlers are registered to handle user input events when the component is activated. These handlers are then unregistered when the component is deactivated. Using it will take some of the headache out of having multiple textareas in one application because only an active component will invoke its handlers.
 
 It also provides better event handling. For example, its captures the `focus` event but defers passing it on for a tick so as to be able to provide both the content and selection values as arguments to its focus handler. Similarly, the change handler will be invoked whenever the content or selection changes, no matter how often, rather then just when the enter key is pressed (say) or when the focus is lost.
 
@@ -32,7 +32,7 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
     npm install
 
-You will need to do this if you want to look at the examples.
+You will need to do this if you want to look at the examples.A
 
 ## Usage
 
@@ -44,7 +44,7 @@ var easyuirichtextarea = require('easyui-richtextarea'),
     RichTextArea = easyuirichtextarea.RichTextArea;  ///
 ```
 
-To use EasyUI-RichTextArea in the browser, take the `easyui-richtextarea.js` file from the project's `dist/` folder and put it somewhere such as a `public/scripts/lib` directory. Referencing this distribution file from a `script` element...
+To use EasyUI-RichTextArea in the browser, take the `easyui-richtextarea.js` file from the project's `dist/` directory and put it somewhere such as a `public/scripts/lib` directory. Referencing this distribution file from a `script` element...
 
 ```html
 <script src="scripts/lib/easyui-richtextarea.js"> </script>
@@ -71,11 +71,57 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
     npm run build-debug
     npm run watch-debug
 
-## Examples
+## Example
 
-See the `examples.html` file in the project's root directory, or read on.
+See the `example.html` file in the project's root directory, or read on.
 
-TODO
+### Creating the component
+
+Aside from the usual selector, the constructor takes four additional and optional arguments for the handlers:
+
+```js
+var richTextArea = new RichTextArea('#richTextArea', changeHandler, scrollHandler, focusHandler, blurHandler);
+
+richTextArea.activate();
+
+function changeHandler(content, selection, contentChanged, selectionChanged) {
+  if (contentChanged) {
+    console.log('content changed')
+  }
+
+  if (selectionChanged) {
+    console.log('selection changed')
+  }
+}
+
+function scrollHandler(scrollTop, scrollLeft) {
+  console.log('scrolled')
+}
+
+function focusHandler(content, selection) {
+  console.log('focused')
+}
+
+function blurHandler() {
+  console.log('blurred')
+}
+```
+
+Note the arguments passed to the handlers.
+
+It also has the usual `clone()` methods, both static and instance.
+
+Activating and deactivating the component couldn't be simpler:
+
+```js
+richTextArea.activate();
+
+richTextArea.deactivate();
+```
+
+### CSS
+
+Bear in mind that all the `activate()` and `deactivate()` methods do is add and remove an `active` class. If you want the component to be hidden or shown depending on whether or not it is active (which is recommended), you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `dist` directory to see how.
 
 ## Contact
 

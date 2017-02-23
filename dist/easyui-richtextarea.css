@@ -1,0 +1,7 @@
+textarea.rich {
+  display: none;
+}
+
+textarea.rich.active {
+  display: block;
+}
