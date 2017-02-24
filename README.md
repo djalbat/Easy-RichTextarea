@@ -117,7 +117,7 @@ richTextArea.deactivate();
 
 ### CSS
 
-Bear in mind that all the `activate()` and `deactivate()` methods do is add and remove an `active` class. If you want the element to be hidden or shown depending on whether or not it is active (which is recommended), you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `dist` directory to see how.
+Bear in mind that all the `activate()` and `deactivate()` methods do is add and remove an `active` class from the element. If you want that element to be hidden or shown depending on whether or not it is active, which is part of the idea, you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `dist` directory to see how this is easily done.
 
 ## Contact
 
