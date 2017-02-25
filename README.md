@@ -4,7 +4,7 @@ A textarea element that handles and hands off events well.
 
 This element enshrines the concept of being active, that is being both visible *and* hogging the user input. Hogging the user input means that several event handlers are registered to handle user input events when the element is activated. These handlers are then unregistered when the element is deactivated. Using it will take some of the headache out of having multiple textareas in one application because only the active rich textarea will invoke its handlers.
 
-It also provides better event handling. For example, its captures the `focus` event but defers handing it off for a tick so as to be able to provide both the content and the selection as arguments to its focus handler. Similarly, the change handler will be invoked whenever the content or selection changes, no matter how often, rather then just when the enter key is pressed, say, or when the focus is lost.
+It also provides better event handling. For example, the change handler will be invoked whenever the content or selection changes, no matter how often, rather then just when the enter key is pressed, say, or when the focus is lost.
 
 ## Related projects
 
@@ -114,6 +114,14 @@ richTextArea.activate();
 
 richTextArea.deactivate();
 ```
+
+### Focus and selection
+
+It is important to note that being active and having the focus are not the same thing for a rich textarea element. The former is a concept defined here, the latter is a native property of the underlying DOM element. This is worth emphasis because the concepts of being active and focus are ofter used interchangeably elsewhere.
+
+Also, note that the `getSelection()` method will always return a selection even when the underlying DOM element has none. This is because the native `startPosition` and `endPosition` properties of the DOM element, on which the `getSelection()` method ultimately relies, always return values regardless of the presence or otherwise of a selection. If there is no selection, they will both return zero. A textarea element does not always have a selection, however. This can occur before it receives the focus, for example, or if the selection is cleared programmatically by way of the native `removeAllRanges()` method. Despite this there currently appears to be no reliable way to discern when the underlying selection is present, and so the `getSelection()` method will always return a selection object.
+
+Some good news is that selection is unaffected by the focus. However, bear in mind that the underlying selection is not updated until the tick after a DOM element receives the focus. For this reason, the rich textarea element will defer the handing off of a 'focus' event for a tick so as to be able to provide the updated selection as one of the arguments to its focus handler.
 
 ### CSS
 
