@@ -38,6 +38,14 @@ class Selection {
 
     return differentTo;
   }
+
+  static fromNothing() {
+    var startPosition = 0,
+        endPosition = 0,
+        selection = new Selection(startPosition, endPosition);
+
+    return selection;
+  }
 }
 
 module.exports = Selection;
