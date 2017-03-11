@@ -1,7 +1,7 @@
 {
   "name": "easyui-richtextarea",
   "author": "James Smith",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "license": "MIT",
   "homepage": "https://github.com/djalbat/EasyUI-RichTextArea",
   "description": "A textarea component that handles and hands off events well.",
@@ -10,7 +10,7 @@
     "url": "https://github.com/djalbat/EasyUI-RichTextArea"
   },
   "dependencies": {
-    "easyui": "^6.0.4",
+    "easyui": "^7.1.3",
     "setimmediate": "^1.0.5"
   },
   "devDependencies": {

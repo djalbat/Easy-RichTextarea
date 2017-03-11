@@ -2,13 +2,12 @@
 
 A textarea element that handles and hands off events well.
 
-This element enshrines the concept of being active, that is being both visible *and* hogging the user input. Hogging the user input means that several event handlers are registered to handle user input events when the element is activated. These handlers are then unregistered when the element is deactivated. Using it will take some of the headache out of having multiple textareas in one application because only the active rich textarea will invoke its handlers.
-
-It also provides better event handling. For example, the change handler will be invoked whenever the content or selection changes, no matter how often, rather then just when the enter key is pressed, say, or when the focus is lost.
+This element enshrines the concept of being active, that is being both visible *and* hogging the user input. Hogging the user input means that several event handlers are registered to handle user input events when the element is activated. These handlers are then unregistered when the element is deactivated. Using it will take some of the headache out of having multiple textareas in one application because only the active rich textarea will invoke its handlers. It also provides better event handling. For example, the change handler will be invoked whenever the content or selection changes, no matter how often, rather then just, say, when the focus is lost.
 
 ## Related projects
 
 - [EasyUI](https://github.com/djalbat/EasyUI) A V-framework.
+- [EasyUI-JSX](https://github.com/djalbat/EasyUI-JSX) JSX support for Easy-UI.
 - [EasyUI-Layout](https://github.com/djalbat/EasyUI-Layout) Layout elements that work with CSS flexbox.
 - [EasyUI-DragAndDrop](https://github.com/djalbat/EasyUI-DragAndDrop) Drag and drop elements including an explorer and a rubbish bin.
 
@@ -31,8 +30,6 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 ...and then install the necessary modules with npm from within the project's root directory:
 
     npm install
-
-You will need to do this if you want to look at the examples.A
 
 ## Usage
 
@@ -71,11 +68,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
     npm run build-debug
     npm run watch-debug
 
-## Example
-
-See the `example.html` file in the project's root directory, or read on.
-
-### Creating the element
+## Creating the element
 
 Aside from the usual selector, the constructor takes four additional and optional arguments for the handlers:
 
@@ -115,7 +108,7 @@ richTextArea.activate();
 richTextArea.deactivate();
 ```
 
-### Focus and selection
+## Focus and selection
 
 It is important to note that being active and having the focus are not the same thing for a rich textarea element. The former is a concept defined here, the latter is a native property of the underlying DOM element. This is worth mentioning because the concepts of being active and being focused are often used interchangeably elsewhere.
 
@@ -123,7 +116,7 @@ Also, note that the `getSelection()` method will always return a selection even 
 
 Some good news is that the selection is unaffected by focus. Bear in mind, however, that a selection is not updated until the tick after a DOM element in question receives the focus. For this reason, the rich textarea element will defer the handing off of a 'focus' event for a tick so as to be able to provide the updated selection as one of the arguments to its focus handler.
 
-### CSS
+## CSS
 
 All the `activate()` and `deactivate()` methods do is add and remove an `active` class from the element. If you want that element to be hidden or shown depending on whether or not it is active, which is part of the idea, you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `dist` directory to see how this is easily done.
 
