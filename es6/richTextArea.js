@@ -15,11 +15,14 @@ class RichTextArea extends TextArea {
   constructor(selector, changeHandler = function() {}, scrollHandler = function() {}, focusHandler = function() {}, blurHandler = function() {}) {
     super(selector);
 
+    this.changeHandlers = [];
+
+    this.onChange(changeHandler);
+
     scrollHandler.intermediateHandler = intermediateScrollHandler.bind(this);
     focusHandler.intermediateHandler = intermediateFocusHandler.bind(this);
     blurHandler.intermediateHandler = intermediateBlurHandler.bind(this);
 
-    this.changeHandler = changeHandler;
     this.scrollHandler = scrollHandler;
     this.focusHandler = focusHandler;
     this.blurHandler = blurHandler;
@@ -47,11 +50,17 @@ class RichTextArea extends TextArea {
     window.on('mouseup contextmenu blur', this.mouseUpHandler.bind(this));
 
     this.on('mousemove', this.mouseMoveHandler.bind(this));
+
     this.on('mousedown', this.mouseDownHandler.bind(this));
+
     this.on('keydown', this.keyDownHandler.bind(this));
+
     this.on('input', this.inputHandler.bind(this));
+
     this.on('scroll', this.scrollHandler);
+
     this.on('focus', this.focusHandler);
+
     this.on('blur', this.blurHandler);
 
     this.addClass('active');
@@ -63,11 +72,17 @@ class RichTextArea extends TextArea {
     window.off('mouseup contextmenu blur', this.mouseUpHandler.bind(this));
 
     this.off('mousemove', this.mouseMoveHandler.bind(this));
+
     this.off('mousedown', this.mouseDownHandler.bind(this));
+
     this.off('keydown', this.keyDownHandler.bind(this));
+
     this.off('input', this.inputHandler.bind(this));
+
     this.off('scroll', this.scrollHandler);
+
     this.off('focus', this.focusHandler);
+
     this.off('blur', this.blurHandler);
 
     this.removeClass('active');
@@ -108,6 +123,20 @@ class RichTextArea extends TextArea {
     this.setSelectionEnd(selectionEnd);
 
     this.previousSelection = selection; ///
+  }
+
+  onChange(changeHandler) {
+    this.changeHandlers.push(changeHandler);
+  }
+
+  offChange(changeHandler) {
+    const index = this.changeHandlers.indexOf(changeHandler);
+
+    if (index > -1) {
+      const deleteCount = 1;
+
+      this.changeHandlers.splice(index, deleteCount);
+    }
   }
 
   mouseUpHandler() {
@@ -155,12 +184,14 @@ class RichTextArea extends TextArea {
           selectionChanged = selectionDifferentToPreviousSelection, ///
           changed = contentChanged || selectionChanged;
 
-    if (changed) {
-      this.changeHandler(content, selection, contentChanged, selectionChanged);
+    this.changeHandlers.forEach(function(changeHandler) {
+      if (changed || changeHandler.regardless) {  ///
+        changeHandler(content, selection, contentChanged, selectionChanged);
+      }
+    });
 
-      this.previousContent = content;
-      this.previousSelection = selection;
-    }
+    this.previousContent = content;
+    this.previousSelection = selection;
   }
 
   static clone(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
