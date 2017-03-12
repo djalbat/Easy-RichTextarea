@@ -1,4 +1,4 @@
-# EasyUI-RichTextArea
+# EasyUI-RichTextarea
 
 A textarea element that handles and hands off events well.
 
@@ -19,13 +19,13 @@ Actually they are, here:
 
 ## Installation
 
-You can install EasyUI-RichTextArea with [npm](https://www.npmjs.com/):
+You can install EasyUI-RichTextarea with [npm](https://www.npmjs.com/):
 
     npm install easyui-richtextarea
 
 You can also clone the repository with [Git](https://git-scm.com/)...
 
-    git clone https://github.com/djalbat/EasyUI-RichTextArea.git
+    git clone https://github.com/djalbat/EasyUI-RichTextarea.git
 
 ...and then install the necessary modules with npm from within the project's root directory:
 
@@ -41,7 +41,7 @@ var easyuirichtextarea = require('easyui-richtextarea'),
     RichTextArea = easyuirichtextarea.RichTextArea;  ///
 ```
 
-To use EasyUI-RichTextArea in the browser, take the `easyui-richtextarea.js` file from the project's `dist/` directory and put it somewhere such as a `public/scripts/lib` directory. Referencing this distribution file from a `script` element...
+To use EasyUI-RichTextarea in the browser, take the `easyui-richtextarea.js` file from the project's `dist/` directory and put it somewhere such as a `public/scripts/lib` directory. Referencing this distribution file from a `script` element...
 
 ```html
 <script src="scripts/lib/easyui-richtextarea.js"> </script>
@@ -73,7 +73,7 @@ Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have
 Aside from the usual selector, the constructor takes four additional and optional arguments for the handlers:
 
 ```js
-var richTextArea = new RichTextArea('#richTextArea', changeHandler, scrollHandler, focusHandler, blurHandler);
+var richTextarea = new RichTextarea('#richTextarea', changeHandler, scrollHandler, focusHandler, blurHandler);
 
 function changeHandler(content, selection, contentChanged, selectionChanged) {
   if (contentChanged) {
@@ -103,9 +103,9 @@ Note the arguments passed to the handlers. It also has the usual `clone()` metho
 Activating and deactivating the element couldn't be simpler:
 
 ```js
-richTextArea.activate();
+richTextarea.activate();
 
-richTextArea.deactivate();
+richTextarea.deactivate();
 ```
 
 ## Focus and selection
