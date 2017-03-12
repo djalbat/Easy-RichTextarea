@@ -3,11 +3,11 @@
   "author": "James Smith",
   "version": "1.0.14",
   "license": "MIT",
-  "homepage": "https://github.com/djalbat/EasyUI-RichTextArea",
+  "homepage": "https://github.com/djalbat/EasyUI-RichTextarea",
   "description": "A textarea element that handles and hands off events well.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/djalbat/EasyUI-RichTextArea"
+    "url": "https://github.com/djalbat/EasyUI-RichTextarea"
   },
   "dependencies": {
     "easyui": "^7.1.3",
