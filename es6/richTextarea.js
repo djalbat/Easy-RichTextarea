@@ -7,11 +7,11 @@ const defer = setImmediate; ///
 const easyui = require('easyui'),
       window = easyui.window,
       Element = easyui.Element,
-      TextArea = easyui.TextArea;
+      Textarea = easyui.Textarea;
 
 const Selection = require('./selection');
 
-class RichTextArea extends TextArea {
+class RichTextarea extends Textarea {
   constructor(selector, changeHandler = function() {}, scrollHandler = function() {}, focusHandler = function() {}, blurHandler = function() {}) {
     super(selector);
 
@@ -36,7 +36,7 @@ class RichTextArea extends TextArea {
     this.mouseDown = false;
   }
 
-  clone(changeHandler, scrollHandler, focusHandler, blurHandler) { return RichTextArea.clone(this, changeHandler, scrollHandler, focusHandler, blurHandler); }
+  clone(changeHandler, scrollHandler, focusHandler, blurHandler) { return RichTextarea.clone(this, changeHandler, scrollHandler, focusHandler, blurHandler); }
 
   isActive() {
     const active = this.hasClass('active');
@@ -195,11 +195,11 @@ class RichTextArea extends TextArea {
   }
 
   static clone(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
-    return Element.clone(RichTextArea, selector, changeHandler, scrollHandler, focusHandler, blurHandler);
+    return Element.clone(RichTextarea, selector, changeHandler, scrollHandler, focusHandler, blurHandler);
   }
 }
 
-module.exports = RichTextArea;
+module.exports = RichTextarea;
 
 function intermediateScrollHandler(scrollHandler, event) {
   const active = this.isActive();

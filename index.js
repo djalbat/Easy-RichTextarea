@@ -2,5 +2,5 @@
 
 module.exports = {
   Selection: require('./lib/selection'),
-  RichTextArea: require('./lib/richTextArea')
+  RichTextarea: require('./lib/richTextarea')
 };
