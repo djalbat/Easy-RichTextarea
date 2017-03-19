@@ -199,12 +199,12 @@ class RichTextarea extends InputElement {
 
   static fromProperties(properties) {
     const { onChange, onScroll, onFocus, onBlur } = properties,
-        changeHandler = onChange, ///
-        scrollHandler = onScroll, ///
-        focusHandler = onFocus, ///
-        blurHandler = onBlur; ///
+          changeHandler = onChange, ///
+          scrollHandler = onScroll, ///
+          focusHandler = onFocus, ///
+          blurHandler = onBlur; ///
 
-    return InputElement.fromProperties(Textarea, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
+    return InputElement.fromProperties(RichTextarea, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
   }
 }
 
