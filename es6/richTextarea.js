@@ -10,7 +10,7 @@ const easyui = require('easyui'),
 
 const Selection = require('./selection');
 
-class RichTextarea extends Textarea {
+class RichTextarea extends InputElement {
   constructor(selector, changeHandler = function() {}, scrollHandler = function() {}, focusHandler = function() {}, blurHandler = function() {}) {
     super(selector);
 
