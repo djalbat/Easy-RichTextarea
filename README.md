@@ -8,7 +8,7 @@ This element enshrines the concept of being active, that is being both visible *
 
 There is now support for [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and its use is *highly recommended*. The contents of this readme file will stay as a reference, however a much better place to start from now on is the EasyUI-JSX online documentation. The section dealing directly with this project is here:
 
-* [EasyUI-JSX Online documentation - EasyUI-RichTextarea](http://djalbat.com/easyui-jsx/#RichTextarea)
+* [EasyUI-JSX Online documentation - EasyUI-RichTextarea](http://djalbat.com/easyui-jsx/#easyUIRichTextarea)
 
 From there you can easily navigate to get an overview of EasyUI-JSX. 
 
