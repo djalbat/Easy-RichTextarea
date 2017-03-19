@@ -88,26 +88,30 @@ class RichTextarea extends InputElement {
   }
 
   getContent() {
-    const value = this.getValue(),
+    const value = this.domElement.value,
           content = value;  ///
 
     return content;
   }
 
   getSelection() {
-    const selectionStart = this.getSelectionStart(),
-          selectionEnd = this.getSelectionEnd(),
+    const selectionStart = this.domElement.selectionStart,
+          selectionEnd = this.domElement.selectionEnd,
           startPosition = selectionStart, ///
-          endPosition = selectionEnd,
+          endPosition = selectionEnd, ///
           selection = new Selection(startPosition, endPosition);
 
     return selection;
   }
 
+  getScrollTop() { return this.domElement.scrollTop; }
+
+  getScrollLeft() { return this.domElement.scrollLeft; }
+
   setContent(content) {
     const value = content;  ///
 
-    this.setValue(value);
+    this.domElement.value = value;
 
     this.previousContent = content; ///
   }
@@ -118,11 +122,15 @@ class RichTextarea extends InputElement {
           selectionStart = selectionStartPosition,  ///
           selectionEnd = selectionEndPosition;  ///
 
-    this.setSelectionStart(selectionStart);
-    this.setSelectionEnd(selectionEnd);
+    this.domElement.selectionStart = selectionStart;
+    this.domElement.selectionEnd = selectionEnd;
 
     this.previousSelection = selection; ///
   }
+
+  setScrollTop(scrollTop) { this.domElement.scrollTop = scrollTop; }
+
+  setScrollLeft(scrollLeft) { this.domElement.scrollLeft = scrollLeft; }
 
   onChange(changeHandler) {
     this.changeHandlers.push(changeHandler);
@@ -137,6 +145,10 @@ class RichTextarea extends InputElement {
       this.changeHandlers.splice(index, deleteCount);
     }
   }
+
+  onResize(resizeHandler) {}
+
+  offResize(resizeHandler) {}
 
   mouseUpHandler() {
     this.mouseDown = false;
