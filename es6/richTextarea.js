@@ -6,7 +6,7 @@ const defer = setImmediate; ///
 
 const easyui = require('easyui'),
       window = easyui.window,
-      Textarea = easyui.InputElement;
+      InputElement = easyui.InputElement;
 
 const Selection = require('./selection');
 
