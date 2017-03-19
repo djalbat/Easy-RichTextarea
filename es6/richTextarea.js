@@ -132,7 +132,9 @@ class RichTextarea extends InputElement {
 
   setScrollLeft(scrollLeft) { this.domElement.scrollLeft = scrollLeft; }
 
-  onChange(changeHandler) {
+  onChange(changeHandler, regardless = false) {
+    changeHandler.regardless = regardless;  ///
+
     this.changeHandlers.push(changeHandler);
   }
 
@@ -155,12 +157,8 @@ class RichTextarea extends InputElement {
   };
 
   mouseMoveHandler() {
-    const active = this.isActive();
-
-    if (active) {
-      if (this.mouseDown === true) {
-        this.possibleChangeHandler();
-      }
+    if (this.mouseDown === true) {
+      this.possibleChangeHandler();
     }
   }
 
@@ -170,11 +168,7 @@ class RichTextarea extends InputElement {
 
   keyDownHandler() {
     defer(function() {
-      const active = this.isActive();
-
-      if (active) {
-        this.possibleChangeHandler();
-      }
+      this.possibleChangeHandler();
     }.bind(this));
   }
 
@@ -187,7 +181,8 @@ class RichTextarea extends InputElement {
   }
 
   possibleChangeHandler() {
-    const content = this.getContent(),
+    const active = this.isActive(),
+          content = this.getContent(),
           selection = this.getSelection(),
           contentDifferentToPreviousContent = (content !== this.previousContent),
           selectionDifferentToPreviousSelection = selection.isDifferentTo(this.previousSelection),
@@ -195,11 +190,13 @@ class RichTextarea extends InputElement {
           selectionChanged = selectionDifferentToPreviousSelection, ///
           changed = contentChanged || selectionChanged;
 
-    this.changeHandlers.forEach(function(changeHandler) {
-      if (changed || changeHandler.regardless) {  ///
-        changeHandler(content, selection, contentChanged, selectionChanged);
-      }
-    });
+    if (changed) {
+      this.changeHandlers.forEach(function(changeHandler) {
+        if (active || changeHandler.regardless) {  ///
+          changeHandler(content, selection, contentChanged, selectionChanged);
+        }
+      });
+    }
 
     this.previousContent = content;
     this.previousSelection = selection;
