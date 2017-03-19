@@ -6,8 +6,7 @@ const defer = setImmediate; ///
 
 const easyui = require('easyui'),
       window = easyui.window,
-      Element = easyui.Element,
-      Textarea = easyui.Textarea;
+      Textarea = easyui.InputElement;
 
 const Selection = require('./selection');
 
@@ -195,9 +194,29 @@ class RichTextarea extends Textarea {
   }
 
   static clone(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
-    return Element.clone(RichTextarea, selector, changeHandler, scrollHandler, focusHandler, blurHandler);
+    return InputElement.clone(RichTextarea, selector, changeHandler, scrollHandler, focusHandler, blurHandler);
+  }
+
+  static fromProperties(properties) {
+    const { onChange, onScroll, onFocus, onBlur } = properties,
+        changeHandler = onChange, ///
+        scrollHandler = onScroll, ///
+        focusHandler = onFocus, ///
+        blurHandler = onBlur; ///
+
+    return InputElement.fromProperties(Textarea, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
   }
 }
+
+Object.assign(RichTextarea, {
+  tagName: 'textarea',
+  ignoredProperties: [
+    'onChange',
+    'onScroll',
+    'onFocus',
+    'onBlur'
+  ]
+});
 
 module.exports = RichTextarea;
 
