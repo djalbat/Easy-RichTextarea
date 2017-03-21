@@ -23,26 +23,26 @@ class Selection {
   }
 
   isEqualTo(selection) {
-    var selectionStartPosition = selection.getStartPosition(),
-        selectionEndPosition = selection.getEndPosition(),
-        startPositionsEqual = (this.startPosition === selectionStartPosition),
-        endPositionsEqual = (this.endPosition === selectionEndPosition),
-        equalTo = (startPositionsEqual && endPositionsEqual);
+    const selectionStartPosition = selection.getStartPosition(),
+          selectionEndPosition = selection.getEndPosition(),
+          startPositionsEqual = (this.startPosition === selectionStartPosition),
+          endPositionsEqual = (this.endPosition === selectionEndPosition),
+          equalTo = (startPositionsEqual && endPositionsEqual);
 
     return equalTo;
   }
 
   isDifferentTo(selection) {
-    var equalTo = this.isEqualTo(selection),
-        differentTo = !equalTo;
+    const equalTo = this.isEqualTo(selection),
+          differentTo = !equalTo;
 
     return differentTo;
   }
 
   static fromNothing() {
-    var startPosition = 0,
-        endPosition = 0,
-        selection = new Selection(startPosition, endPosition);
+    const startPosition = 0,
+          endPosition = 0,
+          selection = new Selection(startPosition, endPosition);
 
     return selection;
   }
