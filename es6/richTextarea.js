@@ -4,9 +4,9 @@ require('setimmediate');
 
 const defer = setImmediate; ///
 
-const easyui = require('easyui'),
-      window = easyui.window,
-      InputElement = easyui.InputElement;
+const easy = require('easy'),
+      window = easy.window,
+      InputElement = easy.InputElement;
 
 const Selection = require('./selection');
 
