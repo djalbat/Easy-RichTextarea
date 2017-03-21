@@ -6,11 +6,11 @@ This element enshrines the concept of being active, that is being both visible *
 
 ### JSX support
 
-There is now support for [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) and its use is *highly recommended*. The contents of this readme file will stay as a reference, however a much better place to start from now on is the EasyUI-JSX online documentation. The section dealing directly with this project is here:
+There is now support for JSX in the form of [Juxtapose](https://github.com/djalbat/Juxtapose). JSX brings with it a [several benefits](http://djalbat.com/juxtapose#jsxIsGreat). So although this and the other Easy projects will continue to work standalone, their use with Juxtapose is *highly recommended*. The contents of this readme file will stay as a reference, however a much better place to start from now on is the Juxtapose online documentation. The section dealing directly with this project is here:
 
-* [EasyUI-JSX Online documentation - EasyUI-RichTextarea](http://djalbat.com/easyui-jsx/#easyUIRichTextarea)
+* [Juxtapose online documentation - Easy-RichTextarea](http://djalbat.com/juxtapose/#easyRichTextarea)
 
-From there you can easily navigate to get an overview of EasyUI-JSX. 
+From there you can easily navigate to get an overview of Juxtapose.
 
 ### Related projects
 
