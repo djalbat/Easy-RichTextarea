@@ -104,10 +104,6 @@ class RichTextarea extends InputElement {
     return selection;
   }
 
-  getScrollTop() { return this.domElement.scrollTop; }
-
-  getScrollLeft() { return this.domElement.scrollLeft; }
-
   setContent(content) {
     const value = content;  ///
 
@@ -127,10 +123,6 @@ class RichTextarea extends InputElement {
 
     this.previousSelection = selection; ///
   }
-
-  setScrollTop(scrollTop) { this.domElement.scrollTop = scrollTop; }
-
-  setScrollLeft(scrollLeft) { this.domElement.scrollLeft = scrollLeft; }
 
   onChange(changeHandler, regardless = false) {
     changeHandler.regardless = regardless;  ///
