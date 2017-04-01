@@ -40,8 +40,6 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Creating instances with JSX
 
-This is easily done:
-
 ```js
 const easyuirichtextarea = require('easyui-richtextarea'),
       { RichTextarea, Selection } = easyuirichtextarea; ///
@@ -78,9 +76,7 @@ function blurHandler() {
 }
 ```
 
-Note the arguments passed to the handlers.
-
-Activating and deactivating the element couldn't be simpler:
+Note the arguments passed to the handlers. Activating and deactivating the element couldn't be simpler:
 
 ```js
 richTextarea.activate();
