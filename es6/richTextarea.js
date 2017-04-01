@@ -11,16 +11,14 @@ const easy = require('easy'),
 const Selection = require('./selection');
 
 class RichTextarea extends InputElement {
-  constructor(selector, changeHandler = function() {}, scrollHandler = function() {}, focusHandler = function() {}, blurHandler = function() {}) {
+  constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
     super(selector);
 
     this.changeHandlers = [];
 
-    this.onChange(changeHandler);
-
-    scrollHandler.intermediateHandler = intermediateScrollHandler.bind(this);
-    focusHandler.intermediateHandler = intermediateFocusHandler.bind(this);
-    blurHandler.intermediateHandler = intermediateBlurHandler.bind(this);
+    if (changeHandler !== undefined) {
+      this.onChange(changeHandler);
+    }
 
     this.scrollHandler = scrollHandler;
     this.focusHandler = focusHandler;
@@ -35,32 +33,30 @@ class RichTextarea extends InputElement {
     this.mouseDown = false;
   }
 
-  clone(changeHandler, scrollHandler, focusHandler, blurHandler) { return RichTextarea.clone(this, changeHandler, scrollHandler, focusHandler, blurHandler); }
-
-  isActive() {
-    const active = this.hasClass('active');
-    
-    return active;
-  }
-
   activate() {
     this.mouseDown = false;
 
-    window.on('mouseup contextmenu blur', this.mouseUpHandler.bind(this));
+    window.on('mouseup contextmenu blur', this.mouseUpHandler, this);
 
-    this.on('mousemove', this.mouseMoveHandler.bind(this));
+    this.on('mousedown', this.mouseDownHandler, this);
 
-    this.on('mousedown', this.mouseDownHandler.bind(this));
+    this.on('mousemove', this.mouseMoveHandler, this);
 
-    this.on('keydown', this.keyDownHandler.bind(this));
+    this.on('keydown', this.keyDownHandler, this);
 
-    this.on('input', this.inputHandler.bind(this));
+    this.on('input', this.inputHandler, this);
 
-    this.on('scroll', this.scrollHandler);
+    if (this.scrollHandler !== undefined) {
+      this.on('scroll', this.scrollHandler, intermediateScrollHandler.bind(this));
+    }
 
-    this.on('focus', this.focusHandler);
+    if (this.focusHandler !== undefined) {
+      this.on('focus', this.focusHandler, intermediateFocusHandler.bind(this));
+    }
 
-    this.on('blur', this.blurHandler);
+    if (this.blurHandler !== undefined) {
+      this.on('blur', this.blurHandler, intermediateBlurHandler.bind(this));
+    }
 
     this.addClass('active');
   }
@@ -68,23 +64,35 @@ class RichTextarea extends InputElement {
   deactivate() {
     this.mouseDown = false;
 
-    window.off('mouseup contextmenu blur', this.mouseUpHandler.bind(this));
+    window.off('mouseup contextmenu blur', this.mouseUpHandler);
 
-    this.off('mousemove', this.mouseMoveHandler.bind(this));
+    this.off('mousedown', this.mouseDownHandler);
 
-    this.off('mousedown', this.mouseDownHandler.bind(this));
+    this.off('mousemove', this.mouseMoveHandler);
 
-    this.off('keydown', this.keyDownHandler.bind(this));
+    this.off('keydown', this.keyDownHandler);
 
-    this.off('input', this.inputHandler.bind(this));
+    this.off('input', this.inputHandler);
 
-    this.off('scroll', this.scrollHandler);
+    if (this.scrollHandler !== undefined) {
+      this.off('scroll', this.scrollHandler);
+    }
 
-    this.off('focus', this.focusHandler);
+    if (this.focusHandler !== undefined) {
+      this.off('focus', this.focusHandler);
+    }
 
-    this.off('blur', this.blurHandler);
+    if (this.blurHandler !== undefined) {
+      this.off('blur', this.blurHandler);
+    }
 
     this.removeClass('active');
+  }
+
+  isActive() {
+    const active = this.hasClass('active');
+
+    return active;
   }
 
   getContent() {
@@ -125,7 +133,9 @@ class RichTextarea extends InputElement {
   }
 
   onChange(changeHandler, regardless = false) {
-    changeHandler.regardless = regardless;  ///
+    Object.assign({
+      regardless: regardless
+    });
 
     this.changeHandlers.push(changeHandler);
   }
@@ -148,14 +158,14 @@ class RichTextarea extends InputElement {
     this.mouseDown = false;
   };
 
-  mouseMoveHandler() {
-    if (this.mouseDown === true) {
-      this.possibleChangeHandler();
-    }
-  }
-
   mouseDownHandler() {
     this.mouseDown = true;
+  }
+
+  mouseMoveHandler() {
+    if (this.mouseDown) {
+      this.possibleChangeHandler();
+    }
   }
 
   keyDownHandler() {
@@ -194,10 +204,6 @@ class RichTextarea extends InputElement {
     this.previousSelection = selection;
   }
 
-  static clone(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
-    return InputElement.clone(RichTextarea, selector, changeHandler, scrollHandler, focusHandler, blurHandler);
-  }
-
   static fromProperties(properties) {
     const { onChange, onScroll, onFocus, onBlur } = properties,
           changeHandler = onChange, ///
@@ -221,7 +227,7 @@ Object.assign(RichTextarea, {
 
 module.exports = RichTextarea;
 
-function intermediateScrollHandler(scrollHandler, event) {
+function intermediateScrollHandler(scrollHandler) {
   const active = this.isActive();
 
   if (active) {
@@ -233,7 +239,7 @@ function intermediateScrollHandler(scrollHandler, event) {
   }
 }
 
-function intermediateFocusHandler(focusHandler, event) {
+function intermediateFocusHandler(focusHandler) {
   defer(function() {
     const active = this.isActive();
 
@@ -247,7 +253,7 @@ function intermediateFocusHandler(focusHandler, event) {
   }.bind(this));
 }
 
-function intermediateBlurHandler(blurHandler, event) {
+function intermediateBlurHandler(blurHandler) {
   const active = this.isActive();
 
   if (active) {

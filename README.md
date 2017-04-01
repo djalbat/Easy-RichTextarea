@@ -6,7 +6,7 @@ This element enshrines the concept of being active, that is being both visible *
 
 ### JSX support
 
-There is now support for JSX in the form of [Juxtapose](https://github.com/djalbat/Juxtapose). JSX brings with it [several benefits](http://djalbat.com/juxtapose#jsxIsGreat). So although this and at least some of the other Easy projects will continue to work standalone, their use with Juxtapose is *highly recommended*. The contents of this readme file will stay as a reference, however a much better place to start from now on is the Juxtapose online documentation. The section dealing directly with this project is here:
+There is now support for JSX in the form of [Juxtapose](https://github.com/djalbat/Juxtapose). JSX brings with it [several benefits](http://djalbat.com/juxtapose#jsxIsGreat). Creating Easy elements by way of JSX is *highly recommended*, although you can still call constructors directly if you wish. The contents of this readme file will stay as a reference, however a much better place to start from now on is the Juxtapose online documentation. The section dealing directly with this project is here:
 
 * [Juxtapose online documentation - Easy-RichTextarea](http://djalbat.com/juxtapose/#easyRichTextarea)
 
@@ -40,47 +40,15 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
-If you're building with [Node.js](http://nodejs.org) the usage is as follows:
+## Creating instances with JSX
+
+This is easily done:
 
 ```js
-var easyuirichtextarea = require('easyui-richtextarea'),
-    Selection = easyuirichtextarea.Selection,
-    RichTextArea = easyuirichtextarea.RichTextArea;  ///
-```
+const easyuirichtextarea = require('easyui-richtextarea'),
+      { RichTextarea, Selection } = easyuirichtextarea; ///
 
-To use EasyUI-RichTextarea in the browser, take the `easyui-richtextarea.js` file from the project's `dist/` directory and put it somewhere such as a `public/scripts/lib` directory. Referencing this distribution file from a `script` element...
-
-```html
-<script src="scripts/lib/easyui-richtextarea.js"> </script>
-```
-
-...will give you a global `easyuirichtextarea` variable which can be used directly:
-
-```js
-var RichTextArea = easyuirichtextarea;
-```
-
-Alternatively, if you're using an AMD style `require` the usage is similar to the Node.js case, only make sure that the path to the distribution file is correct. The following script should work, assuming it lives in the the `public/scripts/` directory:
-
-```js
-var easyuirichtextarea = require('easyui-richtextarea'),
-    Selection = easyuirichtextarea.Selection,
-    RichTextArea = easyuirichtextarea.RichTextArea;  ///
-```
-
-## Compiling from source
-
-Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the `package.json` file. The pertinent commands are:
-
-    npm run build-debug
-    npm run watch-debug
-
-## Creating the element
-
-Aside from the usual selector, the constructor takes four additional and optional arguments for the handlers:
-
-```js
-var richTextarea = new RichTextarea('#richTextarea', changeHandler, scrollHandler, focusHandler, blurHandler);
+const richTextarea = <RichTextarea onChange={changeHandler} onScroll={scrollHandler} onFocus={focusHandler} onBlur={blurHandler} />;
 
 function changeHandler(content, selection, contentChanged, selectionChanged) {
   if (contentChanged) {
@@ -105,7 +73,7 @@ function blurHandler() {
 }
 ```
 
-Note the arguments passed to the handlers. It also has the usual `clone()` methods.
+Note the arguments passed to the handlers.
 
 Activating and deactivating the element couldn't be simpler:
 
@@ -126,6 +94,14 @@ Some good news is that the selection is unaffected by focus. Bear in mind, howev
 ## CSS
 
 All the `activate()` and `deactivate()` methods do is add and remove an `active` class from the element. If you want that element to be hidden or shown depending on whether or not it is active, which is part of the idea, you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `dist` directory to see how this is easily done.
+
+
+## Compiling from source
+
+Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the `package.json` file. The pertinent commands are:
+
+    npm run build-debug
+    npm run watch-debug
 
 ## Contact
 
