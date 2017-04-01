@@ -38,8 +38,6 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
     npm install
 
-## Usage
-
 ## Creating instances with JSX
 
 This is easily done:
