@@ -46,7 +46,14 @@ This is easily done:
 const easyuirichtextarea = require('easyui-richtextarea'),
       { RichTextarea, Selection } = easyuirichtextarea; ///
 
-const richTextarea = <RichTextarea onChange={changeHandler} onScroll={scrollHandler} onFocus={focusHandler} onBlur={blurHandler} />;
+const richTextarea =
+
+        <RichTextarea onChange={changeHandler}
+                      onScroll={scrollHandler}
+                      onFocus={focusHandler}
+                      onBlur={blurHandler} />
+
+      ;
 
 function changeHandler(content, selection, contentChanged, selectionChanged) {
   if (contentChanged) {
