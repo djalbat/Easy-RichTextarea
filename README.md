@@ -22,7 +22,7 @@ From there you can easily navigate to get an overview of Juxtapose.
 
 Actually they are, here:
 
-- [Occam Proof Assistant](http://djalbat.com/occam)
+- [Occam](http://djalbat.com/occam)
 
 ## Installation
 
@@ -76,7 +76,7 @@ function blurHandler() {
 }
 ```
 
-Note the arguments passed to the handlers. Activating and deactivating the element couldn't be simpler:
+Activating and deactivating the element couldn't be simpler:
 
 ```js
 richTextarea.activate();
