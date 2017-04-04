@@ -217,6 +217,9 @@ class RichTextarea extends InputElement {
 
 Object.assign(RichTextarea, {
   tagName: 'textarea',
+  defaultProperties: {
+    className: 'rich'
+  },
   ignoredProperties: [
     'onChange',
     'onScroll',
