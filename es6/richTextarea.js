@@ -91,15 +91,15 @@ class RichTextarea extends InputElement {
   }
 
   getContent() {
-    const value = this.domElement.value,
+    const value = this.getValue(),
           content = value;  ///
 
     return content;
   }
 
   getSelection() {
-    const selectionStart = this.domElement.selectionStart,
-          selectionEnd = this.domElement.selectionEnd,
+    const selectionStart = this.getSelectionStart(),
+          selectionEnd = this.getSelectionEnd(),
           startPosition = selectionStart, ///
           endPosition = selectionEnd, ///
           selection = new Selection(startPosition, endPosition);
@@ -110,7 +110,7 @@ class RichTextarea extends InputElement {
   setContent(content) {
     const value = content;  ///
 
-    this.domElement.value = value;
+    this.setValue(value);
 
     this.previousContent = content; ///
   }
@@ -121,15 +121,11 @@ class RichTextarea extends InputElement {
           selectionStart = selectionStartPosition,  ///
           selectionEnd = selectionEndPosition;  ///
 
-    this.domElement.selectionStart = selectionStart;
-    this.domElement.selectionEnd = selectionEnd;
+    this.setSelectionStart(selectionStart);
+    this.setSelectionEnd(selectionEnd);
 
     this.previousSelection = selection; ///
   }
-
-  onResize(resizeHandler) {}
-
-  offResize(resizeHandler) {}
 
   mouseUpHandler() {
     this.mouseDown = false;
