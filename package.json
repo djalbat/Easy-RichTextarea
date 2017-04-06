@@ -1,7 +1,7 @@
 {
   "name": "easy-richtextarea",
   "author": "James Smith",
-  "version": "1.1.29",
+  "version": "1.1.31",
   "license": "MIT",
   "homepage": "https://github.com/djalbat/Easy-RichTextarea",
   "description": "A textarea element that handles and hands off events well.",

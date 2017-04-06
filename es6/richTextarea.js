@@ -14,12 +14,7 @@ class RichTextarea extends InputElement {
   constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
     super(selector);
 
-    this.changeHandlers = [];
-
-    if (changeHandler !== undefined) {
-      this.onChange(changeHandler);
-    }
-
+    this.changeHandler = changeHandler;
     this.scrollHandler = scrollHandler;
     this.focusHandler = focusHandler;
     this.blurHandler = blurHandler;
@@ -132,24 +127,6 @@ class RichTextarea extends InputElement {
     this.previousSelection = selection; ///
   }
 
-  onChange(changeHandler, regardless = false) {
-    Object.assign({
-      regardless: regardless
-    });
-
-    this.changeHandlers.push(changeHandler);
-  }
-
-  offChange(changeHandler) {
-    const index = this.changeHandlers.indexOf(changeHandler);
-
-    if (index > -1) {
-      const deleteCount = 1;
-
-      this.changeHandlers.splice(index, deleteCount);
-    }
-  }
-
   onResize(resizeHandler) {}
 
   offResize(resizeHandler) {}
@@ -183,25 +160,26 @@ class RichTextarea extends InputElement {
   }
 
   possibleChangeHandler() {
-    const active = this.isActive(),
-          content = this.getContent(),
-          selection = this.getSelection(),
-          contentDifferentToPreviousContent = (content !== this.previousContent),
-          selectionDifferentToPreviousSelection = selection.isDifferentTo(this.previousSelection),
-          contentChanged = contentDifferentToPreviousContent, ///
-          selectionChanged = selectionDifferentToPreviousSelection, ///
-          changed = contentChanged || selectionChanged;
+    const active = this.isActive();
 
-    if (changed) {
-      this.changeHandlers.forEach(function(changeHandler) {
-        if (active || changeHandler.regardless) {  ///
-          changeHandler(content, selection, contentChanged, selectionChanged);
-        }
-      });
+    if (active) {
+      const content = this.getContent(),
+            selection = this.getSelection(),
+            contentDifferentToPreviousContent = (content !== this.previousContent),
+            selectionDifferentToPreviousSelection = selection.isDifferentTo(this.previousSelection),
+            contentChanged = contentDifferentToPreviousContent, ///
+            selectionChanged = selectionDifferentToPreviousSelection, ///
+            changed = contentChanged || selectionChanged;
+
+      if (changed) {
+        const targetElement = this; ///
+
+        this.changeHandler(content, selection, contentChanged, selectionChanged, targetElement);
+      }
+
+      this.previousContent = content;
+      this.previousSelection = selection;
     }
-
-    this.previousContent = content;
-    this.previousSelection = selection;
   }
 
   static fromProperties(properties) {
