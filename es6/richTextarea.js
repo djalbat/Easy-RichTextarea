@@ -20,16 +20,16 @@ class RichTextarea extends InputElement {
     this.blurHandler = blurHandler;
 
     const content = this.getContent(),
-          selection = this.getSelection();
+          selection = this.getSelection(),
+          previousContent = content,  ///
+          previousSelection = selection;  ///
 
-    this.previousContent = content; ///
-    this.previousSelection = selection; ///
-
-    this.mouseDown = false;
+    this.setPreviousContent(previousContent);
+    this.setPreviousSelection(previousSelection);
   }
 
   activate() {
-    this.mouseDown = false;
+    this.setMouseDown();
 
     window.on('mouseup contextmenu blur', this.mouseUpHandler, this);
 
@@ -57,7 +57,7 @@ class RichTextarea extends InputElement {
   }
 
   deactivate() {
-    this.mouseDown = false;
+    this.setMouseDown();
 
     window.off('mouseup contextmenu blur', this.mouseUpHandler);
 
@@ -107,36 +107,105 @@ class RichTextarea extends InputElement {
     return selection;
   }
 
+  getPreviousContent() {
+    const state = this.getState(),
+          { previousContent } = state;
+
+    return previousContent;
+  }
+
+  getPreviousSelection() {
+    const state = this.getState(),
+          { previousSelection } = state;
+
+    return previousSelection;
+  }
+
+  isMouseDown() {
+    const state = this.getState(),
+          { mouseDown } = state;
+
+    return mouseDown;
+  }
+
+  setMouseUp() {
+    const mouseDown = false;
+
+    let state = this.getState();
+
+    state = Object.assign(state, {
+      mouseDown: mouseDown
+    });
+
+    this.setState(state);
+  }
+
+  setMouseDown() {
+    const mouseDown = true;
+
+    let state = this.getState();
+
+    state = Object.assign(state, {
+      mouseDown: mouseDown
+    });
+
+    this.setState(state);
+  }
+
   setContent(content) {
-    const value = content;  ///
+    const value = content,  ///
+          previousContent = content;  ///
 
     this.setValue(value);
 
-    this.previousContent = content; ///
+    this.setPreviousContent(previousContent);
   }
 
   setSelection(selection) {
     const selectionStartPosition = selection.getStartPosition(),
           selectionEndPosition = selection.getEndPosition(),
           selectionStart = selectionStartPosition,  ///
-          selectionEnd = selectionEndPosition;  ///
+          selectionEnd = selectionEndPosition,  ///
+          previousSelection = selection;  ///
 
     this.setSelectionStart(selectionStart);
     this.setSelectionEnd(selectionEnd);
 
-    this.previousSelection = selection; ///
+    this.setPreviousSelection(previousSelection);
+  }
+
+  setPreviousContent(previousContent) {
+    let state = this.getState();
+
+    state = Object.assign(state, {
+      previousContent: previousContent
+    });
+
+    this.setState(state);
+  }
+
+  setPreviousSelection(previousSelection) {
+    let state = this.getState();
+
+    state = Object.assign(state, {
+      previousSelection: previousSelection
+    });
+
+    this.setState(state);
   }
 
   mouseUpHandler() {
-    this.mouseDown = false;
+    this.setMouseUp();
   };
 
   mouseDownHandler() {
-    this.mouseDown = true;
+    this.setMouseDown();
   }
 
   mouseMoveHandler() {
-    if (this.mouseDown) {
+    const mouseDown = this.isMouseDown();
+
+    if (mouseDown) {
       this.possibleChangeHandler();
     }
   }
@@ -160,9 +229,13 @@ class RichTextarea extends InputElement {
 
     if (active) {
       const content = this.getContent(),
-            selection = this.getSelection(),
-            contentDifferentToPreviousContent = (content !== this.previousContent),
-            selectionDifferentToPreviousSelection = selection.isDifferentTo(this.previousSelection),
+            selection = this.getSelection();
+
+      let previousContent = this.getPreviousContent(),
+          previousSelection = this.getPreviousSelection();
+
+      const contentDifferentToPreviousContent = (content !== previousContent),
+            selectionDifferentToPreviousSelection = selection.isDifferentTo(previousSelection),
             contentChanged = contentDifferentToPreviousContent, ///
             selectionChanged = selectionDifferentToPreviousSelection, ///
             changed = contentChanged || selectionChanged;
@@ -173,8 +246,11 @@ class RichTextarea extends InputElement {
         this.changeHandler(content, selection, contentChanged, selectionChanged, targetElement);
       }
 
-      this.previousContent = content;
-      this.previousSelection = selection;
+      previousContent = content;  ///
+      previousSelection = selection;  ///
+
+      this.setPreviousContent(previousContent);
+      this.setPreviousSelection(previousSelection);
     }
   }
 
