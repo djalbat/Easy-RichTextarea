@@ -4,11 +4,11 @@ require('setimmediate');
 
 const defer = setImmediate; ///
 
-const easy = require('easy'),
-      window = easy.window,
-      InputElement = easy.InputElement;
+const easy = require('easy');
 
 const Selection = require('./selection');
+
+const { window, InputElement } = easy;
 
 class RichTextarea extends InputElement {
   constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
