@@ -279,7 +279,8 @@ function intermediateScrollHandler(scrollHandler) {
   if (active) {
     const scrollTop = this.getScrollTop(),
           scrollLeft = this.getScrollLeft(),
-          preventDefault = scrollHandler(scrollTop, scrollLeft);
+          targetElement = this, ///
+          preventDefault = scrollHandler(scrollTop, scrollLeft, targetElement);
 
     return preventDefault;
   }
@@ -292,7 +293,8 @@ function intermediateFocusHandler(focusHandler) {
     if (active) {
       const content = this.getContent(),
             selection = this.getSelection(),
-            preventDefault = focusHandler(content, selection);
+            targetElement = this, ///
+            preventDefault = focusHandler(content, selection, targetElement);
 
       return preventDefault;
     }
@@ -303,7 +305,8 @@ function intermediateBlurHandler(blurHandler) {
   const active = this.isActive();
 
   if (active) {
-    const preventDefault = blurHandler();
+    const targetElement = this, ///
+          preventDefault = blurHandler(targetElement);
 
     return preventDefault;
   }
