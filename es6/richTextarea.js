@@ -255,7 +255,8 @@ class RichTextarea extends InputElement {
   }
 
   static fromProperties(properties) {
-    const { onScroll, onFocus, onBlur } = properties,         scrollHandler = onScroll, ///
+    const { onScroll, onFocus, onBlur } = properties,
+          scrollHandler = onScroll, ///
           focusHandler = onFocus, ///
           blurHandler = onBlur; ///
 
