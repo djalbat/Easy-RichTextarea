@@ -255,13 +255,11 @@ class RichTextarea extends InputElement {
   }
 
   static fromProperties(properties) {
-    const { onChange, onScroll, onFocus, onBlur } = properties,
-          changeHandler = onChange, ///
-          scrollHandler = onScroll, ///
+    const { onScroll, onFocus, onBlur } = properties,         scrollHandler = onScroll, ///
           focusHandler = onFocus, ///
           blurHandler = onBlur; ///
 
-    return InputElement.fromProperties(RichTextarea, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
+    return InputElement.fromProperties(RichTextarea, properties, scrollHandler, focusHandler, blurHandler);
   }
 }
 
@@ -271,7 +269,6 @@ Object.assign(RichTextarea, {
     className: 'rich'
   },
   ignoredProperties: [
-    'onChange',
     'onScroll',
     'onFocus',
     'onBlur'
