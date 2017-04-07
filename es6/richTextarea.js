@@ -107,51 +107,6 @@ class RichTextarea extends InputElement {
     return selection;
   }
 
-  getPreviousContent() {
-    const state = this.getState(),
-          { previousContent } = state;
-
-    return previousContent;
-  }
-
-  getPreviousSelection() {
-    const state = this.getState(),
-          { previousSelection } = state;
-
-    return previousSelection;
-  }
-
-  isMouseDown() {
-    const state = this.getState(),
-          { mouseDown } = state;
-
-    return mouseDown;
-  }
-
-  setMouseUp() {
-    const mouseDown = false;
-
-    let state = this.getState();
-
-    state = Object.assign(state, {
-      mouseDown: mouseDown
-    });
-
-    this.setState(state);
-  }
-
-  setMouseDown() {
-    const mouseDown = true;
-
-    let state = this.getState();
-
-    state = Object.assign(state, {
-      mouseDown: mouseDown
-    });
-
-    this.setState(state);
-  }
-
   setContent(content) {
     const value = content,  ///
           previousContent = content;  ///
@@ -174,32 +129,72 @@ class RichTextarea extends InputElement {
     this.setPreviousSelection(previousSelection);
   }
 
-  setPreviousContent(previousContent) {
-    let state = this.getState();
+  isMouseDown() {
+    const mouseDown = this.fromState('mouseDown');
 
-    state = Object.assign(state, {
+    return mouseDown;
+  }
+
+  getPreviousContent() {
+    const previousContent = this.fromState('previousContent');
+
+    return previousContent;
+  }
+
+  getPreviousSelection() {
+    const previousSelection = this.fromState('previousSelection');
+
+    return previousSelection;
+  }
+
+  setMouseDown(mouseDown) {
+    this.updateState({
+      mouseDown: mouseDown
+    });
+  }
+
+  setPreviousContent(previousContent) {
+    this.updateState({
       previousContent: previousContent
     });
-
-    this.setState(state);
   }
 
   setPreviousSelection(previousSelection) {
-    let state = this.getState();
-
-    state = Object.assign(state, {
+    this.updateState({
       previousSelection: previousSelection
     });
+  }
+
+  fromState(name) {
+    let state = this.getState();
+
+    state = state || {};  ///
+
+    const value = state[name];
+
+    return value;
+  }
+
+  updateState(update) {
+    let state = this.getState();
+
+    state = state || {};  ///
+
+    state = Object.assign(state, update);
 
     this.setState(state);
   }
 
   mouseUpHandler() {
-    this.setMouseUp();
+    const mouseDown = false;
+
+    this.setMouseDown(mouseDown);
   };
 
   mouseDownHandler() {
-    this.setMouseDown();
+    const mouseDown = true;
+
+    this.setMouseDown(mouseDown);
   }
 
   mouseMoveHandler() {
