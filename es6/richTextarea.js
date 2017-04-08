@@ -8,9 +8,9 @@ const easy = require('easy');
 
 const Selection = require('./selection');
 
-const { window, InputElement } = easy;
+const { window, Element } = easy;
 
-class RichTextarea extends InputElement {
+class RichTextarea extends Element {
   constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
     super(selector);
 
@@ -91,15 +91,15 @@ class RichTextarea extends InputElement {
   }
 
   getContent() {
-    const value = this.getValue(),
+    const value = this.domElement.value,
           content = value;  ///
 
     return content;
   }
 
   getSelection() {
-    const selectionStart = this.getSelectionStart(),
-          selectionEnd = this.getSelectionEnd(),
+    const selectionStart = this.domElement.selectionStart,
+          selectionEnd = this.domElement.selectionEnd,
           startPosition = selectionStart, ///
           endPosition = selectionEnd, ///
           selection = new Selection(startPosition, endPosition);
@@ -111,7 +111,7 @@ class RichTextarea extends InputElement {
     const value = content,  ///
           previousContent = content;  ///
 
-    this.setValue(value);
+    this.domElement.value = value;
 
     this.setPreviousContent(previousContent);
   }
@@ -123,8 +123,8 @@ class RichTextarea extends InputElement {
           selectionEnd = selectionEndPosition,  ///
           previousSelection = selection;  ///
 
-    this.setSelectionStart(selectionStart);
-    this.setSelectionEnd(selectionEnd);
+    this.domElement.selectionStart = selectionStart;
+    this.domElement.selectionEnd = selectionEnd;
 
     this.setPreviousSelection(previousSelection);
   }
@@ -250,12 +250,13 @@ class RichTextarea extends InputElement {
   }
 
   static fromProperties(properties) {
-    const { onScroll, onFocus, onBlur } = properties,
+    const { onChange, onScroll, onFocus, onBlur } = properties,
+          changeHandler = onChange, ///
           scrollHandler = onScroll, ///
           focusHandler = onFocus, ///
           blurHandler = onBlur; ///
 
-    return InputElement.fromProperties(RichTextarea, properties, scrollHandler, focusHandler, blurHandler);
+    return Element.fromProperties(RichTextarea, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
   }
 }
 
@@ -265,6 +266,7 @@ Object.assign(RichTextarea, {
     className: 'rich'
   },
   ignoredProperties: [
+    'onChange',
     'onScroll',
     'onFocus',
     'onBlur'
