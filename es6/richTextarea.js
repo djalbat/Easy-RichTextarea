@@ -195,6 +195,8 @@ class RichTextarea extends Element {
     const mouseDown = true;
 
     this.setMouseDown(mouseDown);
+
+    this.possibleChangeHandler();
   }
 
   mouseMoveHandler() {
