@@ -196,7 +196,9 @@ class RichTextarea extends Element {
 
     this.setMouseDown(mouseDown);
 
-    this.possibleChangeHandler();
+    defer(function() {
+      this.possibleChangeHandler();
+    }.bind(this));
   }
 
   mouseMoveHandler() {
