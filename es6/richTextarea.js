@@ -197,7 +197,7 @@ class RichTextarea extends Element {
     this.setMouseDown(mouseDown);
 
     defer(function() {
-      this.possibleChangeHandler();
+      this.callHandler();
     }.bind(this));
   }
 
@@ -205,25 +205,21 @@ class RichTextarea extends Element {
     const mouseDown = this.isMouseDown();
 
     if (mouseDown) {
-      this.possibleChangeHandler();
+      this.callHandler();
     }
   }
 
   keyDownHandler() {
     defer(function() {
-      this.possibleChangeHandler();
+      this.callHandler();
     }.bind(this));
   }
 
   inputHandler() {
-    const active = this.isActive();
-
-    if (active) {
-      this.possibleChangeHandler();
-    }
+    this.callHandler();
   }
 
-  possibleChangeHandler() {
+  callHandler(handler = this.changeHandler, forced = false) {
     const active = this.isActive();
 
     if (active) {
@@ -239,10 +235,10 @@ class RichTextarea extends Element {
             selectionChanged = selectionDifferentToPreviousSelection, ///
             changed = contentChanged || selectionChanged;
 
-      if (changed) {
+      if (changed || forced) {
         const targetElement = this; ///
 
-        this.changeHandler(content, selection, contentChanged, selectionChanged, targetElement);
+        handler(content, selection, contentChanged, selectionChanged, targetElement);
       }
 
       previousContent = content;  ///
@@ -294,26 +290,14 @@ function intermediateScrollHandler(scrollHandler) {
 
 function intermediateFocusHandler(focusHandler) {
   defer(function() {
-    const active = this.isActive();
+    const forced = true;
 
-    if (active) {
-      const content = this.getContent(),
-            selection = this.getSelection(),
-            targetElement = this, ///
-            preventDefault = focusHandler(content, selection, targetElement);
-
-      return preventDefault;
-    }
+    this.callHandler(focusHandler, forced);
   }.bind(this));
 }
 
 function intermediateBlurHandler(blurHandler) {
-  const active = this.isActive();
+  const forced = true;
 
-  if (active) {
-    const targetElement = this, ///
-          preventDefault = blurHandler(targetElement);
-
-    return preventDefault;
-  }
+  this.callHandler(blurHandler, forced);
 }
