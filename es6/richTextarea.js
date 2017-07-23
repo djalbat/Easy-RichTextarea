@@ -279,16 +279,14 @@ Object.assign(RichTextarea, {
 
 module.exports = RichTextarea;
 
-function intermediateScrollHandler(scrollHandler) {
+function intermediateScrollHandler(scrollHandler, event, targetElement) {
   const active = this.isActive();
 
   if (active) {
     const scrollTop = this.getScrollTop(),
-          scrollLeft = this.getScrollLeft(),
-          targetElement = this, ///
-          preventDefault = scrollHandler(scrollTop, scrollLeft, targetElement);
+          scrollLeft = this.getScrollLeft();
 
-    return preventDefault;
+    scrollHandler(scrollTop, scrollLeft, event, targetElement);
   }
 }
 
