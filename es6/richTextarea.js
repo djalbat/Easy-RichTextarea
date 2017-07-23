@@ -19,13 +19,7 @@ class RichTextarea extends Element {
     this.focusHandler = focusHandler;
     this.blurHandler = blurHandler;
 
-    const content = this.getContent(),
-          selection = this.getSelection(),
-          previousContent = content,  ///
-          previousSelection = selection;  ///
-
-    this.setPreviousContent(previousContent);
-    this.setPreviousSelection(previousSelection);
+    this.setInitialState();
   }
 
   activate() {
@@ -90,16 +84,25 @@ class RichTextarea extends Element {
     return active;
   }
 
+  isReadOnly() {
+    const domElement = this.getDOMElement(),
+          readOnly = domElement.readOnly;
+    
+    return readOnly; 
+  }
+
   getContent() {
-    const value = this.domElement.value,
+    const domElement = this.getDOMElement(),
+          value = domElement.value,
           content = value;  ///
 
     return content;
   }
 
   getSelection() {
-    const selectionStart = this.domElement.selectionStart,
-          selectionEnd = this.domElement.selectionEnd,
+    const domElement = this.getDOMElement(),
+          selectionStart = domElement.selectionStart,
+          selectionEnd = domElement.selectionEnd,
           startPosition = selectionStart, ///
           endPosition = selectionEnd, ///
           selection = new Selection(startPosition, endPosition);
@@ -109,9 +112,10 @@ class RichTextarea extends Element {
 
   setContent(content) {
     const value = content,  ///
-          previousContent = content;  ///
+          previousContent = content,  ///
+          domElement = this.getDOMElement();
 
-    this.domElement.value = value;
+    domElement.value = value;
 
     this.setPreviousContent(previousContent);
   }
@@ -121,68 +125,19 @@ class RichTextarea extends Element {
           selectionEndPosition = selection.getEndPosition(),
           selectionStart = selectionStartPosition,  ///
           selectionEnd = selectionEndPosition,  ///
-          previousSelection = selection;  ///
+          previousSelection = selection,  ///
+          domElement = this.getDOMElement();
 
-    this.domElement.selectionStart = selectionStart;
-    this.domElement.selectionEnd = selectionEnd;
+    domElement.selectionStart = selectionStart;
+    domElement.selectionEnd = selectionEnd;
 
     this.setPreviousSelection(previousSelection);
   }
 
-  isMouseDown() {
-    const mouseDown = this.fromState('mouseDown');
-
-    return mouseDown;
-  }
-
-  getPreviousContent() {
-    const previousContent = this.fromState('previousContent');
-
-    return previousContent;
-  }
-
-  getPreviousSelection() {
-    const previousSelection = this.fromState('previousSelection');
-
-    return previousSelection;
-  }
-
-  setMouseDown(mouseDown) {
-    this.updateState({
-      mouseDown: mouseDown
-    });
-  }
-
-  setPreviousContent(previousContent) {
-    this.updateState({
-      previousContent: previousContent
-    });
-  }
-
-  setPreviousSelection(previousSelection) {
-    this.updateState({
-      previousSelection: previousSelection
-    });
-  }
-
-  fromState(name) {
-    let state = this.getState();
-
-    state = state || {};  ///
-
-    const value = state[name];
-
-    return value;
-  }
-
-  updateState(update) {
-    let state = this.getState();
-
-    state = state || {};  ///
-
-    state = Object.assign(state, update);
-
-    this.setState(state);
+  setReadOnly(readOnly) {
+    const domElement = this.getDOMElement();
+    
+    domElement.readOnly = readOnly; 
   }
 
   mouseUpHandler() {
@@ -249,14 +204,63 @@ class RichTextarea extends Element {
     }
   }
 
+  isMouseDown() { return this.fromState('mouseDown'); }
+
+  getPreviousContent() { return this.fromState('previousContent'); }
+
+  getPreviousSelection() { return this.fromState('previousSelection'); }
+
+  setMouseDown(mouseDown) {
+    this.updateState({
+      mouseDown: mouseDown
+    });
+  }
+
+  setPreviousContent(previousContent) {
+    this.updateState({
+      previousContent: previousContent
+    });
+  }
+
+  setPreviousSelection(previousSelection) {
+    this.updateState({
+      previousSelection: previousSelection
+    });
+  }
+
+  setInitialState() {
+    const mouseDown = false,
+          previousContent = null,
+          previousSelection = null;
+
+    this.setState({
+      mouseDown: mouseDown,
+      previousContent: previousContent,
+      previousSelection: previousSelection
+    });
+  }
+
+  initialise() {
+    const content = this.getContent(),
+          selection = this.getSelection(),
+          previousContent = content,  ///
+          previousSelection = selection;  ///
+
+    this.setPreviousContent(previousContent);
+    this.setPreviousSelection(previousSelection);
+  }
+
   static fromProperties(properties) {
     const { onChange, onScroll, onFocus, onBlur } = properties,
           changeHandler = onChange, ///
           scrollHandler = onScroll, ///
           focusHandler = onFocus, ///
-          blurHandler = onBlur; ///
+          blurHandler = onBlur, ///
+          richTextarea = Element.fromProperties(RichTextarea, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
 
-    return Element.fromProperties(RichTextarea, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
+    richTextarea.initialise();
+
+    return richTextarea;
   }
 }
 
