@@ -23,9 +23,11 @@ class RichTextarea extends Element {
   }
 
   activate() {
-    this.setMouseDown();
+    const mouseDown = false;
+    
+    this.setMouseDown(mouseDown);
 
-    window.on('mouseup contextmenu blur', this.mouseUpHandler, this);
+    window.on('mouseup contextmenu blur', this.mouseUpHandler, this); ///
 
     this.on('mousedown', this.mouseDownHandler, this);
 
@@ -36,43 +38,45 @@ class RichTextarea extends Element {
     this.on('input', this.inputHandler, this);
 
     if (this.scrollHandler !== undefined) {
-      this.on('scroll', this.scrollHandler, intermediateScrollHandler.bind(this));
+      this.on('scroll', this.scrollHandler, null, intermediateScrollHandler.bind(this));
     }
 
     if (this.focusHandler !== undefined) {
-      this.on('focus', this.focusHandler, intermediateFocusHandler.bind(this));
+      this.on('focus', this.focusHandler, null, intermediateFocusHandler.bind(this));
     }
 
     if (this.blurHandler !== undefined) {
-      this.on('blur', this.blurHandler, intermediateBlurHandler.bind(this));
+      this.on('blur', this.blurHandler, null, intermediateBlurHandler.bind(this));
     }
 
     this.addClass('active');
   }
 
   deactivate() {
-    this.setMouseDown();
+    const mouseDown = false;
 
-    window.off('mouseup contextmenu blur', this.mouseUpHandler);
+    this.setMouseDown(mouseDown);
 
-    this.off('mousedown', this.mouseDownHandler);
+    window.off('mouseup contextmenu blur', this.mouseUpHandler, this);  ///
 
-    this.off('mousemove', this.mouseMoveHandler);
+    this.off('mousedown', this.mouseDownHandler, this);
 
-    this.off('keydown', this.keyDownHandler);
+    this.off('mousemove', this.mouseMoveHandler, this);
 
-    this.off('input', this.inputHandler);
+    this.off('keydown', this.keyDownHandler, this);
+
+    this.off('input', this.inputHandler, this);
 
     if (this.scrollHandler !== undefined) {
-      this.off('scroll', this.scrollHandler);
+      this.off('scroll', this.scrollHandler, null);
     }
 
     if (this.focusHandler !== undefined) {
-      this.off('focus', this.focusHandler);
+      this.off('focus', this.focusHandler, null);
     }
 
     if (this.blurHandler !== undefined) {
-      this.off('blur', this.blurHandler);
+      this.off('blur', this.blurHandler, null);
     }
 
     this.removeClass('active');
