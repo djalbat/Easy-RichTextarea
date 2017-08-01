@@ -18,12 +18,6 @@ From there you can easily navigate to get an overview of Juxtapose.
 - [EasyUI-Layout](https://github.com/djalbat/EasyUI-Layout) Layout elements that work with CSS flexbox.
 - [EasyUI-DragAndDrop](https://github.com/djalbat/EasyUI-DragAndDrop) Drag and drop elements including an explorer and a rubbish bin.
 
-### Are these projects actually used anywhere?
-
-Actually they are, here:
-
-- [Occam](http://djalbat.com/occam)
-
 ## Installation
 
 You can install EasyUI-RichTextarea with [npm](https://www.npmjs.com/):
