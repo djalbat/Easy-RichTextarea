@@ -14,7 +14,7 @@ From there you can easily navigate to get an overview of Juxtapose.
 
 ### Related projects
 
-- [EasyUI](https://github.com/djalbat/EasyUI) A V-framework.
+- [EasyUI](https://github.com/djalbat/EasyUI) Abstracts away from the DOM.
 - [EasyUI-Layout](https://github.com/djalbat/EasyUI-Layout) Layout elements that work with CSS flexbox.
 - [EasyUI-DragAndDrop](https://github.com/djalbat/EasyUI-DragAndDrop) Drag and drop elements including an explorer and a rubbish bin.
 
