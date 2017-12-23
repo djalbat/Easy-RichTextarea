@@ -1,4 +1,4 @@
-# EasyUI-RichTextarea
+# Easy-RichTextarea
 
 A textarea element that handles and hands off events well.
 
@@ -14,19 +14,19 @@ From there you can easily navigate to get an overview of Juxtapose.
 
 ### Related projects
 
-- [EasyUI](https://github.com/djalbat/EasyUI) Elements that abstract away from the DOM.
-- [EasyUI-Layout](https://github.com/djalbat/EasyUI-Layout) Layout elements that work with CSS flexbox.
-- [EasyUI-DragAndDrop](https://github.com/djalbat/EasyUI-DragAndDrop) Drag and drop elements including an explorer and a rubbish bin.
+- [Easy](https://github.com/djalbat/Easy) Elements that abstract away from the DOM.
+- [Easy-Layout](https://github.com/djalbat/Easy-Layout) Layout elements that work with CSS flexbox.
+- [Easy-DragAndDrop](https://github.com/djalbat/Easy-DragAndDrop) Drag and drop elements including an explorer and a rubbish bin.
 
 ## Installation
 
-You can install EasyUI-RichTextarea with [npm](https://www.npmjs.com/):
+You can install Easy-RichTextarea with [npm](https://www.npmjs.com/):
 
-    npm install easyui-richtextarea
+    npm install easy-richtextarea
 
 You can also clone the repository with [Git](https://git-scm.com/)...
 
-    git clone https://github.com/djalbat/EasyUI-RichTextarea.git
+    git clone https://github.com/djalbat/Easy-RichTextarea.git
 
 ...and then install the necessary modules with npm from within the project's root directory:
 
@@ -35,8 +35,8 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 ## Usage
 
 ```js
-const easyuirichtextarea = require('easyui-richtextarea'),
-      { RichTextarea, Selection } = easyuirichtextarea; ///
+const easyrichtextarea = require('easy-richtextarea'),
+      { RichTextarea, Selection } = easyrichtextarea; ///
 
 const richTextarea =
 
