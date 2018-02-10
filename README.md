@@ -34,6 +34,8 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
+Only building with [Node.js](http://nodejs.org) (or equivalent) is supported, there is no support for the browser anymore. The usage is as follows:
+
 ```js
 const easyrichtextarea = require('easy-richtextarea'),
       { RichTextarea, Selection } = easyrichtextarea; ///
@@ -88,7 +90,7 @@ Some good news is that the selection is unaffected by focus. Bear in mind, howev
 
 ## CSS
 
-All the `activate()` and `deactivate()` methods do is add and remove an `active` class from the element. If you want that element to be hidden or shown depending on whether or not it is active, which is part of the idea, you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `dist` directory to see how this is easily done.
+All the `activate()` and `deactivate()` methods do is add and remove an `active` class from the element. If you want that element to be hidden or shown depending on whether or not it is active, which is part of the idea, you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `css` directory to see how this is easily done.
 
 
 ## Compiling from source
