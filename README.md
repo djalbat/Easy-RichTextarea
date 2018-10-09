@@ -15,8 +15,8 @@ From there you can easily navigate to get an overview of Juxtapose.
 ### Related projects
 
 - [Easy](https://github.com/djalbat/Easy) Elements that abstract away from the DOM.
-- [Easy-Layout](https://github.com/djalbat/Easy-Layout) Layout elements that work with CSS flexbox.
-- [Easy-DragAndDrop](https://github.com/djalbat/Easy-DragAndDrop) Drag and drop elements including an explorer and a rubbish bin.
+- [Easy Layout](https://github.com/djalbat/Easy-Layout) Layout elements that work with CSS flexbox.
+- [Easy DragAndDrop](https://github.com/djalbat/Easy-DragAndDrop) Drag and drop elements including an explorer and a rubbish bin.
 
 ## Installation
 
