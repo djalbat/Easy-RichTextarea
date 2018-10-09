@@ -1,4 +1,4 @@
-# Easy-RichTextarea
+# Easy RichTextarea
 
 A textarea element that handles and hands off events well.
 
