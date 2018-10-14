@@ -143,9 +143,7 @@ class RichTextarea extends Element {
 
     this.setMouseDown(mouseDown);
 
-    defer(function() {
-      this.callHandler();
-    }.bind(this));
+    defer(() => this.callHandler());
   }
 
   mouseMoveHandler() {
@@ -157,9 +155,7 @@ class RichTextarea extends Element {
   }
 
   keyDownHandler() {
-    defer(function() {
-      this.callHandler();
-    }.bind(this));
+    defer(() => this.callHandler());
   }
 
   inputHandler() {
@@ -183,9 +179,7 @@ class RichTextarea extends Element {
             changed = contentChanged || selectionChanged;
 
       if (changed || forced) {
-        const targetElement = this; ///
-
-        handler(content, selection, contentChanged, selectionChanged, targetElement);
+        handler(content, selection, contentChanged, selectionChanged);
       }
 
       previousContent = content;  ///
@@ -271,23 +265,23 @@ Object.assign(RichTextarea, {
 
 module.exports = RichTextarea;
 
-function intermediateScrollHandler(scrollHandler, event, targetElement) {
+function intermediateScrollHandler(scrollHandler, event) {
   const active = this.isActive();
 
   if (active) {
     const scrollTop = this.getScrollTop(),
           scrollLeft = this.getScrollLeft();
 
-    scrollHandler(scrollTop, scrollLeft, event, targetElement);
+    scrollHandler(scrollTop, scrollLeft, event);
   }
 }
 
 function intermediateFocusHandler(focusHandler) {
-  defer(function() {
+  defer(() => {
     const forced = true;
 
     this.callHandler(focusHandler, forced);
-  }.bind(this));
+  });
 }
 
 function intermediateBlurHandler(blurHandler) {
