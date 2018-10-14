@@ -37,11 +37,11 @@ class RichTextarea extends Element {
 
     this.on('input', this.inputHandler, this);
 
-    this.scrollHandler && this.on('scroll', this.scrollHandler, null, intermediateScrollHandler.bind(this));
+    this.scrollHandler && this.on('scroll', this.scrollHandler, this, intermediateScrollHandler);
 
-    this.focusHandler && this.on('focus', this.focusHandler, null, intermediateFocusHandler.bind(this));
+    this.focusHandler && this.on('focus', this.focusHandler, this, intermediateFocusHandler);
 
-    this.blurHandler && this.on('blur', this.blurHandler, null, intermediateBlurHandler.bind(this));
+    this.blurHandler && this.on('blur', this.blurHandler, this, intermediateBlurHandler);
 
     this.addClass('active');
   }
@@ -61,11 +61,11 @@ class RichTextarea extends Element {
 
     this.off('input', this.inputHandler, this);
 
-    this.scrollHandler && this.off('scroll', this.scrollHandler, null);
+    this.scrollHandler && this.off('scroll', this.scrollHandler, this);
 
-    this.focusHandler && this.off('focus', this.focusHandler, null);
+    this.focusHandler && this.off('focus', this.focusHandler, this);
 
-    this.blurHandler && this.off('blur', this.blurHandler, null);
+    this.blurHandler && this.off('blur', this.blurHandler, this);
 
     this.removeClass('active');
   }
@@ -139,30 +139,35 @@ class RichTextarea extends Element {
   };
 
   mouseDownHandler() {
-    const mouseDown = true;
-
+    const mouseDown = true,
+					forced = false;
     this.setMouseDown(mouseDown);
 
-    defer(() => this.callHandler());
+    defer(() => this.callHandler(this.changeHandler, forced));
   }
 
   mouseMoveHandler() {
-    const mouseDown = this.isMouseDown();
+    const mouseDown = this.isMouseDown(),
+					forced = false;
 
     if (mouseDown) {
-      this.callHandler();
+      this.callHandler(this.changeHandler, forced);
     }
   }
 
   keyDownHandler() {
-    defer(() => this.callHandler());
+  	const forced = false;
+
+    defer(() => this.callHandler(this.changeHandler, forced));
   }
 
   inputHandler() {
-    this.callHandler();
+  	const forced = false;
+
+    this.callHandler(this.changeHandler, forced);
   }
 
-  callHandler(handler = this.changeHandler, forced = false) {
+  callHandler(handler, forced) {
     const active = this.isActive();
 
     if (active) {
@@ -179,7 +184,7 @@ class RichTextarea extends Element {
             changed = contentChanged || selectionChanged;
 
       if (changed || forced) {
-        handler(content, selection, contentChanged, selectionChanged);
+        handler.apply(this, content, selection, contentChanged, selectionChanged);
       }
 
       previousContent = content;  ///
@@ -265,27 +270,27 @@ Object.assign(RichTextarea, {
 
 module.exports = RichTextarea;
 
-function intermediateScrollHandler(scrollHandler, event) {
+function intermediateScrollHandler(scrollHandler, event, element) {
   const active = this.isActive();
 
   if (active) {
     const scrollTop = this.getScrollTop(),
           scrollLeft = this.getScrollLeft();
 
-    scrollHandler(scrollTop, scrollLeft, event);
+    scrollHandler.apply(element, scrollTop, scrollLeft, event);
   }
 }
 
-function intermediateFocusHandler(focusHandler) {
-  defer(() => {
+function intermediateFocusHandler(focusHandler, element) {
+  defer(function() {
     const forced = true;
 
-    this.callHandler(focusHandler, forced);
+    element.callHandler(focusHandler, forced);
   });
 }
 
-function intermediateBlurHandler(blurHandler) {
+function intermediateBlurHandler(blurHandler, element) {
   const forced = true;
 
-  this.callHandler(blurHandler, forced);
+  element.callHandler(blurHandler, forced);
 }
