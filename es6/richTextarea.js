@@ -37,17 +37,11 @@ class RichTextarea extends Element {
 
     this.on('input', this.inputHandler, this);
 
-    if (this.scrollHandler !== undefined) {
-      this.on('scroll', this.scrollHandler, null, intermediateScrollHandler.bind(this));
-    }
+    this.scrollHandler && this.on('scroll', this.scrollHandler, null, intermediateScrollHandler.bind(this));
 
-    if (this.focusHandler !== undefined) {
-      this.on('focus', this.focusHandler, null, intermediateFocusHandler.bind(this));
-    }
+    this.focusHandler && this.on('focus', this.focusHandler, null, intermediateFocusHandler.bind(this));
 
-    if (this.blurHandler !== undefined) {
-      this.on('blur', this.blurHandler, null, intermediateBlurHandler.bind(this));
-    }
+    this.blurHandler && this.on('blur', this.blurHandler, null, intermediateBlurHandler.bind(this));
 
     this.addClass('active');
   }
@@ -67,17 +61,11 @@ class RichTextarea extends Element {
 
     this.off('input', this.inputHandler, this);
 
-    if (this.scrollHandler !== undefined) {
-      this.off('scroll', this.scrollHandler, null);
-    }
+    this.scrollHandler && this.off('scroll', this.scrollHandler, null);
 
-    if (this.focusHandler !== undefined) {
-      this.off('focus', this.focusHandler, null);
-    }
+    this.focusHandler && this.off('focus', this.focusHandler, null);
 
-    if (this.blurHandler !== undefined) {
-      this.off('blur', this.blurHandler, null);
-    }
+    this.blurHandler && this.off('blur', this.blurHandler, null);
 
     this.removeClass('active');
   }
