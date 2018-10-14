@@ -266,17 +266,17 @@ Object.assign(RichTextarea, {
 module.exports = RichTextarea;
 
 function intermediateScrollHandler(scrollHandler, event, element) {
-  const active = this.isActive();
+  const active = element.isActive();
 
   if (active) {
-    const scrollTop = this.getScrollTop(),
-          scrollLeft = this.getScrollLeft();
+    const scrollTop = element.getScrollTop(),
+          scrollLeft = element.getScrollLeft();
 
     scrollHandler.call(element, scrollTop, scrollLeft, event);
   }
 }
 
-function intermediateFocusHandler(focusHandler, element) {
+function intermediateFocusHandler(focusHandler, event, element) {
   defer(function() {
     const forced = true;
 
@@ -284,7 +284,7 @@ function intermediateFocusHandler(focusHandler, element) {
   });
 }
 
-function intermediateBlurHandler(blurHandler, element) {
+function intermediateBlurHandler(blurHandler, event, element) {
   const forced = true;
 
   element.intermediateHandler(blurHandler, forced);
