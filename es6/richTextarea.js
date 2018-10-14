@@ -139,35 +139,30 @@ class RichTextarea extends Element {
   };
 
   mouseDownHandler() {
-    const mouseDown = true,
-					forced = false;
+    const mouseDown = true;
+
     this.setMouseDown(mouseDown);
 
-    defer(() => this.intermediateHandler(this.changeHandler, forced));
+    defer(() => this.intermediateHandler(this.changeHandler));
   }
 
   mouseMoveHandler() {
-    const mouseDown = this.isMouseDown(),
-					forced = false;
+    const mouseDown = this.isMouseDown();
 
     if (mouseDown) {
-      this.intermediateHandler(this.changeHandler, forced);
+      this.intermediateHandler(this.changeHandler);
     }
   }
 
   keyDownHandler() {
-  	const forced = false;
-
-    defer(() => this.intermediateHandler(this.changeHandler, forced));
+    defer(() => this.intermediateHandler(this.changeHandler));
   }
 
   inputHandler() {
-  	const forced = false;
-
-    this.intermediateHandler(this.changeHandler, forced);
+    this.intermediateHandler(this.changeHandler);
   }
 
-  intermediateHandler(handler, forced) {
+  intermediateHandler(handler, forced = false) {
     const active = this.isActive();
 
     if (active) {
