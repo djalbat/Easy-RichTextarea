@@ -143,7 +143,7 @@ class RichTextarea extends Element {
 					forced = false;
     this.setMouseDown(mouseDown);
 
-    defer(() => this.callHandler(this.changeHandler, forced));
+    defer(() => this.intermediateHandler(this.changeHandler, forced));
   }
 
   mouseMoveHandler() {
@@ -151,23 +151,23 @@ class RichTextarea extends Element {
 					forced = false;
 
     if (mouseDown) {
-      this.callHandler(this.changeHandler, forced);
+      this.intermediateHandler(this.changeHandler, forced);
     }
   }
 
   keyDownHandler() {
   	const forced = false;
 
-    defer(() => this.callHandler(this.changeHandler, forced));
+    defer(() => this.intermediateHandler(this.changeHandler, forced));
   }
 
   inputHandler() {
   	const forced = false;
 
-    this.callHandler(this.changeHandler, forced);
+    this.intermediateHandler(this.changeHandler, forced);
   }
 
-  callHandler(handler, forced) {
+  intermediateHandler(handler, forced) {
     const active = this.isActive();
 
     if (active) {
@@ -184,7 +184,7 @@ class RichTextarea extends Element {
             changed = contentChanged || selectionChanged;
 
       if (changed || forced) {
-        handler.apply(this, content, selection, contentChanged, selectionChanged);
+        handler.call(this, content, selection, contentChanged, selectionChanged);
       }
 
       previousContent = content;  ///
@@ -277,7 +277,7 @@ function intermediateScrollHandler(scrollHandler, event, element) {
     const scrollTop = this.getScrollTop(),
           scrollLeft = this.getScrollLeft();
 
-    scrollHandler.apply(element, scrollTop, scrollLeft, event);
+    scrollHandler.call(element, scrollTop, scrollLeft, event);
   }
 }
 
@@ -285,12 +285,12 @@ function intermediateFocusHandler(focusHandler, element) {
   defer(function() {
     const forced = true;
 
-    element.callHandler(focusHandler, forced);
+    element.intermediateHandler(focusHandler, forced);
   });
 }
 
 function intermediateBlurHandler(blurHandler, element) {
   const forced = true;
 
-  element.callHandler(blurHandler, forced);
+  element.intermediateHandler(blurHandler, forced);
 }
