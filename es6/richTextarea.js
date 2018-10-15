@@ -190,27 +190,42 @@ class RichTextarea extends Element {
     }
   }
 
-  isMouseDown() { return this.fromState('mouseDown'); }
+  isMouseDown() {
+    const state = this.getState(),
+          { mouseDown } = state;
 
-  getPreviousContent() { return this.fromState('previousContent'); }
+    return mouseDown;
+  }
 
-  getPreviousSelection() { return this.fromState('previousSelection'); }
+  getPreviousContent() {
+    const state = this.getState(),
+          { previousContent } = state;
+
+    return previousContent;
+  }
+
+  getPreviousSelection() {
+    const state = this.getState(),
+          { previousSelection } = state;
+
+    return previousSelection;
+  }
 
   setMouseDown(mouseDown) {
     this.updateState({
-      mouseDown: mouseDown
+      mouseDown
     });
   }
 
   setPreviousContent(previousContent) {
     this.updateState({
-      previousContent: previousContent
+      previousContent
     });
   }
 
   setPreviousSelection(previousSelection) {
     this.updateState({
-      previousSelection: previousSelection
+      previousSelection
     });
   }
 
@@ -220,9 +235,9 @@ class RichTextarea extends Element {
           previousSelection = null;
 
     this.setState({
-      mouseDown: mouseDown,
-      previousContent: previousContent,
-      previousSelection: previousSelection
+      mouseDown,
+      previousContent,
+      previousSelection
     });
   }
 
