@@ -39,6 +39,12 @@ class Selection {
     return differentTo;
   }
 
+  static fromStartPositionAndEndPosition(startPosition, endPosition) {
+    const selection = new Selection(startPosition, endPosition);
+
+    return selection;
+  }
+
   static fromNothing() {
     const startPosition = 0,
           endPosition = 0,
