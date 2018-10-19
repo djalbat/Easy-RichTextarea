@@ -97,7 +97,7 @@ class RichTextarea extends Element {
           selectionEnd = domElement.selectionEnd,
           startPosition = selectionStart, ///
           endPosition = selectionEnd, ///
-          selection = new Selection(startPosition, endPosition);
+          selection = Selection.fromStartPositionAndEndPosition(startPosition, endPosition);
 
     return selection;
   }
