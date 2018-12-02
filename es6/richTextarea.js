@@ -241,16 +241,6 @@ class RichTextarea extends Element {
     });
   }
 
-  initialise() {
-    const content = this.getContent(),
-          selection = this.getSelection(),
-          previousContent = content,  ///
-          previousSelection = selection;  ///
-
-    this.setPreviousContent(previousContent);
-    this.setPreviousSelection(previousSelection);
-  }
-
   static fromProperties(properties) {
     const { onChange, onScroll, onFocus, onBlur } = properties,
           changeHandler = onChange, ///
@@ -258,8 +248,6 @@ class RichTextarea extends Element {
           focusHandler = onFocus, ///
           blurHandler = onBlur, ///
           richTextarea = Element.fromProperties(RichTextarea, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
-
-    richTextarea.initialise();
 
     return richTextarea;
   }
