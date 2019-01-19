@@ -172,14 +172,15 @@ class RichTextarea extends Element {
       let previousContent = this.getPreviousContent(),
           previousSelection = this.getPreviousSelection();
 
-      const contentDifferentToPreviousContent = (content !== previousContent),
+      const element = this, ///
+            contentDifferentToPreviousContent = (content !== previousContent),
             selectionDifferentToPreviousSelection = selection.isDifferentTo(previousSelection),
             contentChanged = contentDifferentToPreviousContent, ///
             selectionChanged = selectionDifferentToPreviousSelection, ///
             changed = contentChanged || selectionChanged;
 
       if (changed || forced) {
-        handler.call(this, content, selection, contentChanged, selectionChanged);
+        handler.call(this, content, selection, contentChanged, selectionChanged, element);
       }
 
       previousContent = content;  ///
