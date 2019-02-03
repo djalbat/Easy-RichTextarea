@@ -276,7 +276,7 @@ function intermediateScrollHandler(scrollHandler, event, element) {
     const scrollTop = element.getScrollTop(),
           scrollLeft = element.getScrollLeft();
 
-    scrollHandler.call(element, scrollTop, scrollLeft, event);
+    scrollHandler.call(element, scrollTop, scrollLeft, event, element);
   }
 }
 
