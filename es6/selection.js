@@ -23,11 +23,16 @@ class Selection {
   }
 
   isEqualTo(selection) {
-    const selectionStartPosition = selection.getStartPosition(),
-          selectionEndPosition = selection.getEndPosition(),
-          startPositionsEqual = (this.startPosition === selectionStartPosition),
-          endPositionsEqual = (this.endPosition === selectionEndPosition),
-          equalTo = (startPositionsEqual && endPositionsEqual);
+    let equalTo = false;
+
+    if (selection !== null) {
+      const selectionStartPosition = selection.getStartPosition(),
+            selectionEndPosition = selection.getEndPosition(),
+            startPositionsEqual = (this.startPosition === selectionStartPosition),
+            endPositionsEqual = (this.endPosition === selectionEndPosition);
+
+      equalTo = (startPositionsEqual && endPositionsEqual);
+    }
 
     return equalTo;
   }
