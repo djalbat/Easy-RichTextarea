@@ -8,7 +8,7 @@ This element enshrines the concept of being active, that is being both visible *
 
 There is now support for JSX in the form of [Juxtapose](https://github.com/djalbat/Juxtapose). JSX brings with it [several benefits](http://djalbat.com/juxtapose#jsxIsGreat). So although you will always be able to call constructors directly if you wish, creating Easy elements by way of JSX is *highly recommended*. The contents of this readme file will stay as a reference, however a much better place to start from now on is the online documentation for Juxtapose. The section dealing directly with this project is here:
 
-* [Juxtapose online documentation - Easy-RichTextarea](http://djalbat.com/juxtapose/#easyRichTextarea)
+* [Juxtapose online documentation - Easy-RichTextarea](http://juxtapose.info#easyRichTextarea)
 
 From there you can easily navigate to get an overview of Juxtapose.
 
