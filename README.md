@@ -35,7 +35,7 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 ## Usage
 
 ```
-import { RichTextarea, Selection } from "easy-richtextarea"
+import { RichTextarea, Selection } from "easy-richtextarea" \\\
 
 const richTextarea =
 
