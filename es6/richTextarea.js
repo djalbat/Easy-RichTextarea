@@ -18,8 +18,6 @@ class RichTextarea extends Element {
     this.scrollHandler = scrollHandler;
     this.focusHandler = focusHandler;
     this.blurHandler = blurHandler;
-
-    this.setInitialState();
   }
 
   activate() {
@@ -242,13 +240,19 @@ class RichTextarea extends Element {
     });
   }
 
-  static fromProperties(properties) {
+  initialise(properties) {
+    this.setInitialState();
+  }
+
+  static fromClass(Class, properties) {
     const { onChange, onScroll, onFocus, onBlur } = properties,
           changeHandler = onChange, ///
           scrollHandler = onScroll, ///
           focusHandler = onFocus, ///
           blurHandler = onBlur, ///
-          richTextarea = Element.fromProperties(RichTextarea, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
+          richTextarea = Element.fromClass(Class, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
+
+    richTextarea.initialise(properties);
 
     return richTextarea;
   }

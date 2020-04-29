@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "easy": "^10.0.5",
-    "easy-with-style": "^1.0.9"
+    "easy-with-style": "^1.0.9",
+    "setimmediate": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

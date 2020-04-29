@@ -8,10 +8,33 @@ Object.assign(window, {
   React
 });
 
-const body = new Body();
+const body = new Body(),
+      richTextarea =
 
-body.prepend(
+        <RichTextarea onChange={changeHandler}
+                      onScroll={scrollHandler}
+                      onFocus={focusHandler}
+                      onBlur={blurHandler}
+        />
 
-  <RichTextarea/>
+;
 
-);
+richTextarea.activate();
+
+body.prepend(richTextarea);
+
+function changeHandler(event, element) {
+  debugger
+}
+
+function scrollHandler(event, element) {
+  debugger
+}
+
+function focusHandler(event, element) {
+  debugger
+}
+
+function blurHandler(event, element) {
+  debugger
+}
