@@ -2,13 +2,15 @@
 
 import "setimmediate";
 
+import withStyle from "easy-with-style";  ///
+
 import { window, Element } from "easy";
 
 import Selection from "./selection"
 
 const defer = setImmediate; ///
 
-export default class RichTextarea extends Element {
+class RichTextarea extends Element {
   constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
     super(selector);
 
@@ -242,6 +244,19 @@ export default class RichTextarea extends Element {
     this.setInitialState();
   }
 
+  static tagName = "textarea";
+
+  static defaultProperties = {
+    className: "rich"
+  };
+
+  static ignoredProperties = [
+    "onChange",
+    "onScroll",
+    "onFocus",
+    "onBlur"
+  ];
+
   static fromClass(Class, properties) {
     const { onChange, onScroll, onFocus, onBlur } = properties,
           changeHandler = onChange, ///
@@ -256,18 +271,15 @@ export default class RichTextarea extends Element {
   }
 }
 
-Object.assign(RichTextarea, {
-  tagName: "textarea",
-  defaultProperties: {
-    className: "rich"
-  },
-  ignoredProperties: [
-    "onChange",
-    "onScroll",
-    "onFocus",
-    "onBlur"
-  ]
-});
+export default withStyle(RichTextarea)`
+
+  display: none;
+  
+  .active {
+    display: block;
+  }
+  
+`
 
 function intermediateScrollHandler(scrollHandler, event, element) {
   const active = element.isActive();
