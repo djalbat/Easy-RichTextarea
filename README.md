@@ -88,7 +88,7 @@ Some good news is that the selection is unaffected by focus. Bear in mind, howev
 
 ## Styles
 
-By default the rich textarea will be hidden when inactive and displayed when active. To override this behaviour, use [Easy with Style](https://github.com/djalbat/easy-with-style):
+By default the rich textarea will be hidden when inactive and displayed when active. By far the best way to override this behaviour is to use [Easy with Style](https://github.com/djalbat/easy-with-style):
 
 ```
 import withStyle from "easy-with-style";
