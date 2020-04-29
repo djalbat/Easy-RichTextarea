@@ -14,9 +14,9 @@ From there you can easily navigate to get an overview of Juxtapose.
 
 ### Related projects
 
-- [Easy](https://github.com/djalbat/Easy) Elements that abstract away from the DOM.
-- [Easy Layout](https://github.com/djalbat/Easy-Layout) Layout elements that work with CSS flexbox.
-- [Easy DragAndDrop](https://github.com/djalbat/Easy-DragAndDrop) Drag and drop elements including an explorer and a rubbish bin.
+- [Easy](https://github.com/djalbat/easy) Elements that abstract away from the DOM.
+- [Easy Layout](https://github.com/djalbat/easy-layout) Layout elements that work with CSS flexbox.
+- [Easy DragAndDrop](https://github.com/djalbat/easy-draganddrop) Drag and drop elements including an explorer and a rubbish bin.
 
 ## Installation
 
@@ -86,10 +86,25 @@ Also, note that the `getSelection()` method will always return a selection even 
 
 Some good news is that the selection is unaffected by focus. Bear in mind, however, that a selection is not updated until the tick after a DOM element in question receives the focus. For this reason, the rich textarea element will defer the handing off of a 'focus' event for a tick so as to be able to provide the updated selection as one of the arguments to its focus handler.
 
-## CSS
+## Styles
 
-All the `activate()` and `deactivate()` methods do is add and remove an `active` class from the element. If you want that element to be hidden or shown depending on whether or not it is active, which is part of the idea, you need to define this class accordingly. Look at the `easyui-richtextarea.css` file in the `css` directory to see how this is easily done.
+By default the rich textarea will be hidden when inactive and displayed when active. To override this behaviour, use [Easy with Style](https://github.com/djalbat/easy-with-style):
 
+```
+import withStyle from "easy-with-style";
+
+export default (RichTextarea)`
+
+  ...
+
+  .active {
+
+    ...
+
+  }
+
+`;
+```
 
 ## Compiling from source
 
