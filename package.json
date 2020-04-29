@@ -1,7 +1,7 @@
 {
   "name": "easy-richtextarea",
   "author": "James Smith",
-  "version": "1.1.96",
+  "version": "2.0.0",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/easy-richtextarea",
   "description": "A textarea element that handles and hands off events well.",
@@ -10,17 +10,21 @@
     "url": "https://github.com/djalbat/easy-richtextarea"
   },
   "dependencies": {
-    "easy": "^8.2.54",
+    "easy": "^10.0.5",
+    "easy-with-style": "^1.0.9",
     "setimmediate": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-react-jsx": "^7.8.3",
     "@babel/preset-env": "^7.8.6",
-    "watchful-cli": "^1.0.10"
+    "browserify": "^16.5.0",
+    "watchful-cli": "^1.4.6"
   },
   "scripts": {
     "clean": "rm -rf ./lib",
-    "watchful": "watchful --source-directory=./es6 --lib-directory=./lib",
+    "watchful": "watchful --source-directory=./es6 --temp-directory=./lib --entry-file=example.js --bundle-file=./example.js --pause=100",
     "batch": "npm run watchful batch --",
     "batch-debug": "npm run watchful batch -- --debug",
     "incremental": "npm run watchful incremental --",
