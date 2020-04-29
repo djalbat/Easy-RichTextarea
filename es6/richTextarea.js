@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-require('setimmediate');
+require("setimmediate");
 
 const defer = setImmediate; ///
 
-const easy = require('easy');
+const easy = require("easy");
 
-const Selection = require('./selection');
+const Selection = require("./selection");
 
 const { window, Element } = easy;
 
@@ -27,23 +27,23 @@ class RichTextarea extends Element {
     
     this.setMouseDown(mouseDown);
 
-    window.on('mouseup contextmenu blur', this.mouseUpHandler, this); ///
+    window.on("mouseup contextmenu blur", this.mouseUpHandler, this); ///
 
-    this.on('mousedown', this.mouseDownHandler, this);
+    this.on("mousedown", this.mouseDownHandler, this);
 
-    this.on('mousemove', this.mouseMoveHandler, this);
+    this.on("mousemove", this.mouseMoveHandler, this);
 
-    this.on('keydown', this.keyDownHandler, this);
+    this.on("keydown", this.keyDownHandler, this);
 
-    this.on('input', this.inputHandler, this);
+    this.on("input", this.inputHandler, this);
 
-    this.scrollHandler && this.on('scroll', this.scrollHandler, this, intermediateScrollHandler);
+    this.scrollHandler && this.on("scroll", this.scrollHandler, this, intermediateScrollHandler);
 
-    this.focusHandler && this.on('focus', this.focusHandler, this, intermediateFocusHandler);
+    this.focusHandler && this.on("focus", this.focusHandler, this, intermediateFocusHandler);
 
-    this.blurHandler && this.on('blur', this.blurHandler, this, intermediateBlurHandler);
+    this.blurHandler && this.on("blur", this.blurHandler, this, intermediateBlurHandler);
 
-    this.addClass('active');
+    this.addClass("active");
   }
 
   deactivate() {
@@ -51,27 +51,27 @@ class RichTextarea extends Element {
 
     this.setMouseDown(mouseDown);
 
-    window.off('mouseup contextmenu blur', this.mouseUpHandler, this);  ///
+    window.off("mouseup contextmenu blur", this.mouseUpHandler, this);  ///
 
-    this.off('mousedown', this.mouseDownHandler, this);
+    this.off("mousedown", this.mouseDownHandler, this);
 
-    this.off('mousemove', this.mouseMoveHandler, this);
+    this.off("mousemove", this.mouseMoveHandler, this);
 
-    this.off('keydown', this.keyDownHandler, this);
+    this.off("keydown", this.keyDownHandler, this);
 
-    this.off('input', this.inputHandler, this);
+    this.off("input", this.inputHandler, this);
 
-    this.scrollHandler && this.off('scroll', this.scrollHandler, this);
+    this.scrollHandler && this.off("scroll", this.scrollHandler, this);
 
-    this.focusHandler && this.off('focus', this.focusHandler, this);
+    this.focusHandler && this.off("focus", this.focusHandler, this);
 
-    this.blurHandler && this.off('blur', this.blurHandler, this);
+    this.blurHandler && this.off("blur", this.blurHandler, this);
 
-    this.removeClass('active');
+    this.removeClass("active");
   }
 
   isActive() {
-    const active = this.hasClass('active');
+    const active = this.hasClass("active");
 
     return active;
   }
@@ -255,15 +255,15 @@ class RichTextarea extends Element {
 }
 
 Object.assign(RichTextarea, {
-  tagName: 'textarea',
+  tagName: "textarea",
   defaultProperties: {
-    className: 'rich'
+    className: "rich"
   },
   ignoredProperties: [
-    'onChange',
-    'onScroll',
-    'onFocus',
-    'onBlur'
+    "onChange",
+    "onScroll",
+    "onFocus",
+    "onBlur"
   ]
 });
 
