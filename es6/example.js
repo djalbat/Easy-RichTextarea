@@ -24,17 +24,23 @@ richTextarea.activate();
 body.prepend(richTextarea);
 
 function changeHandler(event, element) {
-  debugger
+  const contentChanged = element.hasContentChanged(),
+        selectionChanged = element.hasSelectionChanged();
+
+  console.log(contentChanged, selectionChanged)
 }
 
 function scrollHandler(event, element) {
-  debugger
+  const scrollTop = element.getScrollTop(),
+        scrollLeft = element.getScrollLeft();
+
+  console.log(scrollTop, scrollLeft)
 }
 
 function focusHandler(event, element) {
-  debugger
+  console.log("focus")
 }
 
 function blurHandler(event, element) {
-  debugger
+  console.log("blur")
 }

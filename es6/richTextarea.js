@@ -35,11 +35,11 @@ class RichTextarea extends Element {
 
     this.on("input", this.inputHandler, this);
 
-    this.scrollHandler && this.on("scroll", this.scrollHandler, this, intermediateScrollHandler);
+    this.scrollHandler && this.on("scroll", this.intermediateScrollHandler, this);
 
-    this.focusHandler && this.on("focus", this.focusHandler, this, intermediateFocusHandler);
+    this.focusHandler && this.on("focus", this.intermediateFocusHandler, this);
 
-    this.blurHandler && this.on("blur", this.blurHandler, this, intermediateBlurHandler);
+    this.blurHandler && this.on("blur", this.intermediateBlurHandler, this);
 
     this.addClass("active");
   }
@@ -59,11 +59,11 @@ class RichTextarea extends Element {
 
     this.off("input", this.inputHandler, this);
 
-    this.scrollHandler && this.off("scroll", this.scrollHandler, this);
+    this.scrollHandler && this.off("scroll", this.intermediateScrollHandler, this);
 
-    this.focusHandler && this.off("focus", this.focusHandler, this);
+    this.focusHandler && this.off("focus", this.intermediateFocusHandler, this);
 
-    this.blurHandler && this.off("blur", this.blurHandler, this);
+    this.blurHandler && this.off("blur", this.intermediateBlurHandler, this);
 
     this.removeClass("active");
   }
@@ -96,6 +96,14 @@ class RichTextarea extends Element {
     return selection;
   }
 
+  setReadOnly(readOnly) {
+    const domElement = this.getDOMElement();
+
+    Object.assign(domElement, {
+      readOnly
+    });
+  }
+
   setContent(content) {
     const value = content,  ///
           previousContent = content,  ///
@@ -124,67 +132,76 @@ class RichTextarea extends Element {
     this.setPreviousSelection(previousSelection);
   }
 
-  setReadOnly(readOnly) {
-    const domElement = this.getDOMElement();
-
-    Object.assign(domElement, {
-      readOnly
-    });
-  }
-
-  mouseUpHandler() {
+  mouseUpHandler(event, element) {
     const mouseDown = false;
 
     this.setMouseDown(mouseDown);
   };
 
-  mouseDownHandler() {
-    const mouseDown = true;
+  mouseDownHandler(event, element) {
+    const forced = false,
+          mouseDown = true;
 
     this.setMouseDown(mouseDown);
 
-    defer(() => this.intermediateHandler(this.changeHandler));
+    defer(() => this.intermediateHandler(event, element, this.changeHandler, forced));
   }
 
-  mouseMoveHandler() {
-    const mouseDown = this.isMouseDown();
+  mouseMoveHandler(event, element) {
+    const forced = false,
+          mouseDown = this.isMouseDown();
 
     if (mouseDown) {
-      this.intermediateHandler(this.changeHandler);
+      this.intermediateHandler(event, element, this.changeHandler, forced);
     }
   }
 
-  keyDownHandler() {
-    defer(() => this.intermediateHandler(this.changeHandler));
+  keyDownHandler(event, element) {
+    const forced = false;
+
+    defer(() => this.intermediateHandler(event, element, this.changeHandler, forced));
   }
 
-  inputHandler() {
-    this.intermediateHandler(this.changeHandler);
+  inputHandler(event, element) {
+    const forced = false;
+
+    this.intermediateHandler(event, element, this.changeHandler, forced);
   }
 
-  intermediateHandler(handler, forced = false) {
+  intermediateScrollHandler(event, element) {
+    const active = element.isActive();
+
+    if (active) {
+      this.scrollHandler.call(element, event, element);
+    }
+  }
+
+  intermediateFocusHandler(event, element) {
+    const forced = true;
+
+    defer(() => this.intermediateHandler(event, element, this.focusHandler, forced));
+  }
+
+  intermediateBlurHandler(event, element) {
+    const forced = true;
+
+    this.intermediateHandler(event, element, this.blurHandler, forced);
+  }
+
+  intermediateHandler(event, element, handler, forced) {
     const active = this.isActive();
 
     if (active) {
-      const content = this.getContent(),
-            selection = this.getSelection();
-
-      let previousContent = this.getPreviousContent(),
-          previousSelection = this.getPreviousSelection();
-
-      const element = this, ///
-            contentDifferentToPreviousContent = (content !== previousContent),
-            selectionDifferentToPreviousSelection = selection.isDifferentTo(previousSelection),
-            contentChanged = contentDifferentToPreviousContent, ///
-            selectionChanged = selectionDifferentToPreviousSelection, ///
-            changed = contentChanged || selectionChanged;
+      const changed = this.hasChanged();
 
       if (changed || forced) {
-        handler.call(this, content, selection, contentChanged, selectionChanged, element);
+        handler.call(element, event, element);
       }
 
-      previousContent = content;  ///
-      previousSelection = selection;  ///
+      const content = this.getContent(),
+            selection = this.getSelection(),
+            previousContent = content,  ///
+            previousSelection = selection;  ///
 
       this.setPreviousContent(previousContent);
       this.setPreviousSelection(previousSelection);
@@ -196,6 +213,32 @@ class RichTextarea extends Element {
           { mouseDown } = state;
 
     return mouseDown;
+  }
+
+  hasChanged() {
+    const contentChanged = this.hasContentChanged(),
+          selectionChanged = this.hasSelectionChanged(),
+          changed = (contentChanged || selectionChanged);
+
+    return changed;
+  }
+
+  hasContentChanged() {
+    const content = this.getContent(),
+          previousContent = this.getPreviousContent(),
+          contentDifferentToPreviousContent = (content !== previousContent),
+          contentChanged = contentDifferentToPreviousContent; ///
+
+    return contentChanged;
+  }
+
+  hasSelectionChanged() {
+    const selection = this.getSelection(),
+          previousSelection = this.getPreviousSelection(),
+          selectionDifferentToPreviousSelection = selection.isDifferentTo(previousSelection),
+          selectionChanged = selectionDifferentToPreviousSelection; ///
+
+    return selectionChanged;
   }
 
   getPreviousContent() {
@@ -282,28 +325,3 @@ export default withStyle(RichTextarea)`
   }
   
 `
-
-function intermediateScrollHandler(scrollHandler, event, element) {
-  const active = element.isActive();
-
-  if (active) {
-    const scrollTop = element.getScrollTop(),
-          scrollLeft = element.getScrollLeft();
-
-    scrollHandler.call(element, scrollTop, scrollLeft, event, element);
-  }
-}
-
-function intermediateFocusHandler(focusHandler, event, element) {
-  defer(() => {
-    const forced = true;
-
-    element.intermediateHandler(focusHandler, forced);
-  });
-}
-
-function intermediateBlurHandler(blurHandler, event, element) {
-  const forced = true;
-
-  element.intermediateHandler(blurHandler, forced);
-}
