@@ -1,6 +1,6 @@
 "use strict";
 
-class Selection {
+export default class Selection {
   constructor(startPosition, endPosition) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
@@ -58,5 +58,3 @@ class Selection {
     return selection;
   }
 }
-
-module.exports = Selection;

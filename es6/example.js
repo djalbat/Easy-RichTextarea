@@ -2,7 +2,7 @@
 
 import { Body, React } from "easy";
 
-import { RichTextarea } from "../index";
+import { RichTextarea } from "./index";
 
 Object.assign(window, {
   React

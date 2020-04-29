@@ -1,16 +1,14 @@
 "use strict";
 
-require("setimmediate");
+import "setimmediate";
+
+import { window, Element } from "easy";
+
+import Selection from "./selection"
 
 const defer = setImmediate; ///
 
-const easy = require("easy");
-
-const Selection = require("./selection");
-
-const { window, Element } = easy;
-
-class RichTextarea extends Element {
+export default class RichTextarea extends Element {
   constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
     super(selector);
 
@@ -270,8 +268,6 @@ Object.assign(RichTextarea, {
     "onBlur"
   ]
 });
-
-module.exports = RichTextarea;
 
 function intermediateScrollHandler(scrollHandler, event, element) {
   const active = element.isActive();
