@@ -34,9 +34,8 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 
 ## Usage
 
-```js
-const easyrichtextarea = require('easy-richtextarea'),
-      { RichTextarea, Selection } = easyrichtextarea; ///
+```
+import { RichTextarea, Selection } from "easy-richtextarea"
 
 const richTextarea =
 
@@ -47,32 +46,32 @@ const richTextarea =
 
       ;
 
-function changeHandler(content, selection, contentChanged, selectionChanged) {
-  if (contentChanged) {
-    console.log('content changed')
-  }
+function changeHandler(event, element) {
+  const contentChanged = element.hasContentChanged(),
+        selectionChanged = element.hasSelectionChanged();
 
-  if (selectionChanged) {
-    console.log('selection changed')
-  }
+  console.log(contentChanged, selectionChanged)
 }
 
-function scrollHandler(scrollTop, scrollLeft) {
-  console.log('scrolled')
+function scrollHandler(event, element) {
+  const scrollTop = element.getScrollTop(),
+        scrollLeft = element.getScrollLeft();
+
+  console.log(scrollTop, scrollLeft)
 }
 
-function focusHandler(content, selection) {
-  console.log('focused')
+function focusHandler(event, element) {
+  console.log("focus")
 }
 
-function blurHandler() {
-  console.log('blurred')
+function blurHandler(event, element) {
+  console.log("blur")
 }
 ```
 
 Activating and deactivating the element couldn't be simpler:
 
-```js
+```
 richTextarea.activate();
 
 richTextarea.deactivate();
