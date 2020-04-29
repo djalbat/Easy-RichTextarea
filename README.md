@@ -42,7 +42,8 @@ const richTextarea =
         <RichTextarea onChange={changeHandler}
                       onScroll={scrollHandler}
                       onFocus={focusHandler}
-                      onBlur={blurHandler} />
+                      onBlur={blurHandler}
+        />
 
       ;
 
