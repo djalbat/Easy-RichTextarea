@@ -44,16 +44,26 @@ export default class Selection {
     return differentTo;
   }
 
-  static fromStartPositionAndEndPosition(startPosition, endPosition) {
-    const selection = new Selection(startPosition, endPosition);
-
-    return selection;
-  }
-
   static fromNothing() {
     const startPosition = 0,
           endPosition = 0,
           selection = new Selection(startPosition, endPosition);
+
+    return selection;
+  }
+
+  static fromDOMElement(domElement) {
+    const { selectionStart, selectionEnd } = domElement,
+          startPosition = selectionStart, ///
+          endPosition = selectionEnd, ///
+          selection = new Selection(startPosition, endPosition);
+
+    return selection;
+
+  }
+
+  static fromStartPositionAndEndPosition(startPosition, endPosition) {
+    const selection = new Selection(startPosition, endPosition);
 
     return selection;
   }

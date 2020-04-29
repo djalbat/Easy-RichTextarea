@@ -76,14 +76,14 @@ class RichTextarea extends Element {
 
   isReadOnly() {
     const domElement = this.getDOMElement(),
-          readOnly = domElement.readOnly;
+          { readOnly } = domElement;
     
     return readOnly; 
   }
 
   getContent() {
     const domElement = this.getDOMElement(),
-          value = domElement.value,
+          { value } = domElement,
           content = value;  ///
 
     return content;
@@ -91,11 +91,7 @@ class RichTextarea extends Element {
 
   getSelection() {
     const domElement = this.getDOMElement(),
-          selectionStart = domElement.selectionStart,
-          selectionEnd = domElement.selectionEnd,
-          startPosition = selectionStart, ///
-          endPosition = selectionEnd, ///
-          selection = Selection.fromStartPositionAndEndPosition(startPosition, endPosition);
+          selection = Selection.fromDOMElement(domElement);
 
     return selection;
   }
@@ -105,7 +101,9 @@ class RichTextarea extends Element {
           previousContent = content,  ///
           domElement = this.getDOMElement();
 
-    domElement.value = value;
+    Object.assign(domElement, {
+      value
+    });
 
     this.setPreviousContent(previousContent);
   }
@@ -118,16 +116,20 @@ class RichTextarea extends Element {
           previousSelection = selection,  ///
           domElement = this.getDOMElement();
 
-    domElement.selectionStart = selectionStart;
-    domElement.selectionEnd = selectionEnd;
+    Object.assign(domElement, {
+      selectionStart,
+      selectionEnd
+    });
 
     this.setPreviousSelection(previousSelection);
   }
 
   setReadOnly(readOnly) {
     const domElement = this.getDOMElement();
-    
-    domElement.readOnly = readOnly; 
+
+    Object.assign(domElement, {
+      readOnly
+    });
   }
 
   mouseUpHandler() {
@@ -293,7 +295,7 @@ function intermediateScrollHandler(scrollHandler, event, element) {
 }
 
 function intermediateFocusHandler(focusHandler, event, element) {
-  defer(function() {
+  defer(() => {
     const forced = true;
 
     element.intermediateHandler(focusHandler, forced);
