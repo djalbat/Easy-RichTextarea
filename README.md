@@ -77,6 +77,10 @@ richTextarea.activate();
 
 richTextarea.deactivate();
 ```
+Or you can just set the `active` attribute directly:
+```
+<RichTextarea ... active />
+```
 
 ## Focus and selection
 

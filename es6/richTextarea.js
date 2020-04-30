@@ -286,7 +286,13 @@ class RichTextarea extends Element {
   }
 
   initialise(properties) {
+    const { active } =  properties;
+
     this.setInitialState();
+
+    if (active) {
+      this.activate();
+    }
   }
 
   static tagName = "textarea";
@@ -299,7 +305,8 @@ class RichTextarea extends Element {
     "onChange",
     "onScroll",
     "onFocus",
-    "onBlur"
+    "onBlur",
+    "active"
   ];
 
   static fromClass(Class, properties) {
