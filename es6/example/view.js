@@ -1,6 +1,6 @@
 "use strict";
 
-import { RichTextarea } from "../index";
+import RichTextarea from "./richTextarea";
 
 const View = (properties) =>
 
