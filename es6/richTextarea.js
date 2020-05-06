@@ -1,14 +1,12 @@
 "use strict";
 
-import "setimmediate";
-
 import withStyle from "easy-with-style";  ///
 
 import { window, Element } from "easy";
 
 import Selection from "./selection"
 
-const defer = setImmediate; ///
+const defer = (func) => setTimeout(func, 0); ///
 
 class RichTextarea extends Element {
   constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
@@ -323,12 +321,14 @@ class RichTextarea extends Element {
   }
 }
 
-export default withStyle(RichTextarea)`
+export default RichTextarea;
 
-  display: none;
-  
-  .active {
-    display: block;
-  }
-  
-`
+// export default withStyle(RichTextarea)`
+//
+//   display: none;
+//
+//   .active {
+//     display: block;
+//   }
+//
+// `
