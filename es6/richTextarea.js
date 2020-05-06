@@ -321,14 +321,12 @@ class RichTextarea extends Element {
   }
 }
 
-export default RichTextarea;
+export default withStyle(RichTextarea)`
 
-// export default withStyle(RichTextarea)`
-//
-//   display: none;
-//
-//   .active {
-//     display: block;
-//   }
-//
-// `
+  display: none;
+
+  .active {
+    display: block;
+  }
+
+`
