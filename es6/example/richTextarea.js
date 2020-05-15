@@ -2,7 +2,7 @@
 
 import withStyle from "easy-with-style";
 
-import { RichTextarea } from "../index";
+import { RichTextarea } from "../index";  ///
 
 export default withStyle(RichTextarea)`
 
