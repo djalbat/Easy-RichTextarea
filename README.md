@@ -92,7 +92,7 @@ Some good news is that the selection is unaffected by focus. Bear in mind, howev
 
 ## Styles
 
-There is a small amount of default styling. The richtextarea element has a class name, however, allowing you to override this with CSS. Or a better way is to use [Easy with Style](https://github.com/djalbat/easy-with-style). For example:
+There is a small amount of default styling. The rich textarea element has a class name, however, allowing you to override this with CSS. Or a better way is to use [Easy with Style](https://github.com/djalbat/easy-with-style). For example:
 
 ```
 import withStyle from "easy-with-style";
