@@ -9,8 +9,8 @@ import Selection from "./selection"
 const defer = (func) => setTimeout(func, 0); ///
 
 class RichTextarea extends Element {
-  constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
-    super(selector);
+  constructor(selectorOrDOMElement, changeHandler, scrollHandler, focusHandler, blurHandler) {
+    super(selectorOrDOMElement);
 
     this.changeHandler = changeHandler;
     this.scrollHandler = scrollHandler;
