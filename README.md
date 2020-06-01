@@ -112,7 +112,7 @@ export default (RichTextarea)`
 `;
 ```
 
-## Compiling from source
+## Building
 
 Automation is done with [npm scripts](https://docs.npmjs.com/misc/scripts), have a look at the `package.json` file. The pertinent commands are:
 
