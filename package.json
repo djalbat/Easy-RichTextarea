@@ -1,7 +1,7 @@
 {
   "name": "easy-richtextarea",
   "author": "James Smith",
-  "version": "2.2.36",
+  "version": "2.2.37",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/easy-richtextarea",
   "description": "A textarea element that handles and hands off events well.",
@@ -10,8 +10,8 @@
     "url": "https://github.com/djalbat/easy-richtextarea"
   },
   "dependencies": {
-    "easy": "^10.3.12",
-    "easy-with-style": "^2.0.27"
+    "easy": "^10.3.18",
+    "easy-with-style": "^2.0.28"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
