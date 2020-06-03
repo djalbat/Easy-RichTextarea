@@ -9,8 +9,8 @@ import Selection from "./selection"
 const defer = (func) => setTimeout(func, 0); ///
 
 class RichTextarea extends Element {
-  constructor(selectorOrDOMElement, changeHandler, scrollHandler, focusHandler, blurHandler) {
-    super(selectorOrDOMElement);
+  constructor(selector, changeHandler, scrollHandler, focusHandler, blurHandler) {
+    super(selector);
 
     this.changeHandler = changeHandler;
     this.scrollHandler = scrollHandler;
@@ -283,8 +283,8 @@ class RichTextarea extends Element {
     });
   }
 
-  initialise(properties) {
-    const { active } =  properties;
+  initialise() {
+    const { active } = this.properties;
 
     this.setInitialState();
 
@@ -315,7 +315,7 @@ class RichTextarea extends Element {
           blurHandler = onBlur, ///
           richTextarea = Element.fromClass(Class, properties, changeHandler, scrollHandler, focusHandler, blurHandler);
 
-    richTextarea.initialise(properties);
+    richTextarea.initialise();
 
     return richTextarea;
   }
