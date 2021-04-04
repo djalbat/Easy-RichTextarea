@@ -25042,8 +25042,8 @@
     exports.default = _default;
   });
 
-  // lib/index.js
-  var require_lib7 = __commonJS((exports) => {
+  // lib/browser.js
+  var require_browser5 = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -25077,7 +25077,7 @@
     });
     exports.default = void 0;
     var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
-    var _index = require_lib7();
+    var _browser = require_browser5();
     function _interopRequireDefault2(obj) {
       return obj && obj.__esModule ? obj : {
         default: obj
@@ -25102,7 +25102,7 @@
       };
       return data;
     }
-    var _default = _easyWithStyle2.default(_index.RichTextarea)(_templateObject());
+    var _default = _easyWithStyle2.default(_browser.RichTextarea)(_templateObject());
     exports.default = _default;
   });
 
