@@ -90,7 +90,7 @@ It is important to note that being active and having the focus are not the same 
 
 Also, note that the `getSelection()` method will always return a selection even when the underlying DOM element has none. This is because the native `startPosition` and `endPosition` properties of the DOM element, on which the `getSelection()` method ultimately relies, always return values regardless of the presence or otherwise of a selection. If there is no selection, they will both return zero. A textarea element does not always have a selection, however. This can occur before it receives the focus, or if the selection is cleared programmatically by way of the native `removeAllRanges()` method. Despite this, there currently appears to be no reliable way to discern when the underlying selection is present, and so the `getSelection()` method will always return a selection object.
 
-Some good news is that the selection is unaffected by focus. Bear in mind, however, that a selection is not updated until the tick after a DOM element in question receives the focus. For this reason, the rich textarea element will defer the handing off of a 'focus' event for a tick so as to be able to provide the updated selection as one of the arguments to its focus handler.
+Some good news is that the selection is unaffected by focus. Bear in mind, however, that a selection is not updated until the tick after a DOM element in question receives the focus. For this reason, the rich textarea element will defer the handing off of a focus event for a tick so as to be able to provide the updated selection as one of the arguments to its focus handler.
 
 ## Styles
 
