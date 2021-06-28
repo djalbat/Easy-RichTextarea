@@ -362,10 +362,10 @@ class RichTextarea extends Element {
             focusHandler = onFocus, ///
             blurHandler = onBlur; ///
 
-    changeHandler && this.onChange(changeHandler);
-    scrollHandler && this.onScroll(scrollHandler);
-    focusHandler && this.onFocus(focusHandler);
-    blurHandler && this.onBlur(blurHandler);
+    changeHandler && this.onChange(changeHandler, this);
+    scrollHandler && this.onScroll(scrollHandler, this);
+    focusHandler && this.onFocus(focusHandler, this);
+    blurHandler && this.onBlur(blurHandler, this);
 
     if (active) {
       this.activate();
@@ -379,10 +379,10 @@ class RichTextarea extends Element {
           focusHandler = onFocus, ///
           blurHandler = onBlur; ///
 
-    changeHandler && this.offChange(changeHandler);
-    scrollHandler && this.offScroll(scrollHandler);
-    focusHandler && this.offFocus(focusHandler);
-    blurHandler && this.offBlur(blurHandler);
+    changeHandler && this.offChange(changeHandler, this);
+    scrollHandler && this.offScroll(scrollHandler, this);
+    focusHandler && this.offFocus(focusHandler, this);
+    blurHandler && this.offBlur(blurHandler, this);
   }
 
   initialise() {
